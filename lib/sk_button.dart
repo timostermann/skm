@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
 
 class SkButton extends StatelessWidget {
-  const SkButton({
-    Key? key,
-  }) : super(key: key);
+  final void Function()? _onTap;
+  final Widget _child;
+
+  SkButton({required onTap, required child})
+      : _onTap = onTap,
+        _child = child;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print("jabadabaduh"),
+      onTap: _onTap,
       child: Container(
         height: 60,
         width: 200,
         decoration: BoxDecoration(
-          color: Color(0xff8fa3aa),
           borderRadius: BorderRadius.all(Radius.circular(35)),
+          gradient: LinearGradient(
+              colors: [
+                Color(0xff8fa3aa),
+                Color(0xffbcc8cb),
+                Color(0xffdde3e6),
+              ],
+              begin: Alignment.center,
+              end: Alignment.topRight,
+              stops: [0, 0.7, 1]),
         ),
         alignment: Alignment.center,
-        child: Text(
-          "Start",
-          style: TextStyle(color: Colors.white, fontSize: 28),
-          textAlign: TextAlign.center,
-        ),
+        child: _child,
       ),
     );
   }

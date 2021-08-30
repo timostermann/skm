@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skm_services/sk_button.dart';
+import 'package:skm_services/customer_page.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -43,14 +44,26 @@ class _HomeState extends State<Home> {
             SafeArea(
               child: Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(vertical: 30),
+                margin: EdgeInsets.only(bottom: 75, top: 30),
                 child: Column(
                   children: [
                     SvgPicture.asset(
                       'assets/icons/logo_white.svg',
                       height: 130,
                     ),
-                    SkButton()
+                    SkButton(
+                      child: Text(
+                        "Start",
+                        style: TextStyle(color: Colors.white, fontSize: 28),
+                        textAlign: TextAlign.center,
+                      ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return CustomerPage();
+                        }),
+                      ),
+                    ),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
