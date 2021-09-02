@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:skm_services/styles.dart';
 
 class SkButton extends StatelessWidget {
-  final void Function()? _onTap;
+  final void Function() _onTap;
   final Widget _child;
 
-  SkButton({required onTap, required child})
-      : _onTap = onTap,
+  SkButton({
+    required onTap,
+    required child,
+  })  : _onTap = onTap,
         _child = child;
 
   @override
@@ -19,9 +22,9 @@ class SkButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(35)),
           gradient: LinearGradient(
               colors: [
-                Color(0xff8fa3aa),
-                Color(0xffbcc8cb),
-                Color(0xffdde3e6),
+                SkColors.main500,
+                SkColors.main400,
+                SkColors.main300,
               ],
               begin: Alignment.center,
               end: Alignment.topRight,

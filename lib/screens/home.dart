@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:skm_services/sk_button.dart';
-import 'package:skm_services/customer_page.dart';
+import 'package:skm_services/components/sk_button.dart';
+import 'package:skm_services/screens/customer_screen.dart';
+import 'package:skm_services/styles.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,8 +16,9 @@ class _HomeState extends State<Home> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/kabine.jpeg'),
-              fit: BoxFit.cover),
+            image: AssetImage('assets/images/kabine.jpeg'),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Stack(
           children: <Widget>[
@@ -29,8 +31,8 @@ class _HomeState extends State<Home> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xf8212728),
-                    Color(0xff000000),
+                    SkColors.main700,
+                    Colors.black,
                   ],
                 ),
                 borderRadius: BorderRadius.only(
@@ -49,7 +51,8 @@ class _HomeState extends State<Home> {
                   children: [
                     SvgPicture.asset(
                       'assets/icons/logo_white.svg',
-                      height: 130,
+                      height:
+                          MediaQuery.of(context).size.width < 700 ? 130 : 160,
                     ),
                     SkButton(
                       child: Text(
@@ -60,7 +63,8 @@ class _HomeState extends State<Home> {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return CustomerPage();
+                          print(MediaQuery.of(context).size.width);
+                          return CustomerScreen();
                         }),
                       ),
                     ),
