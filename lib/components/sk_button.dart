@@ -6,8 +6,8 @@ class SkButton extends StatelessWidget {
   final Widget _child;
 
   SkButton({
-    required onTap,
-    required child,
+    required void Function() onTap,
+    required Widget child,
   })  : _onTap = onTap,
         _child = child;
 

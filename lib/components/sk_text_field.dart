@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_svg/svg.dart';
 import '../styles.dart';
 
 class SkTextField extends StatelessWidget {
@@ -8,9 +9,9 @@ class SkTextField extends StatelessWidget {
   final bool _optional;
 
   const SkTextField({
-    required name,
-    required label,
-    required optional,
+    required String name,
+    required String label,
+    required bool optional,
   })  : _name = name,
         _label = label,
         _optional = optional;
@@ -26,9 +27,9 @@ class SkTextField extends StatelessWidget {
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: SkColors.main800,
+        fillColor: SkColors.main700,
         labelStyle: TextStyle(
-          color: SkColors.main400,
+          color: SkColors.main500,
         ),
         labelText: _label,
         focusedBorder: OutlineInputBorder(

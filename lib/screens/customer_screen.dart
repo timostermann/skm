@@ -39,7 +39,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
           ),
         ),
         child: SafeArea(
-          child: Container(
+          child: Padding(
             padding: const EdgeInsets.all(25),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,6 +58,14 @@ class _CustomerScreenState extends State<CustomerScreen> {
                               name: "name",
                               label: "Name",
                               optional: true,
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            SkTextField(
+                              name: "kunden_nr",
+                              label: "Kundennummer",
+                              optional: false,
                             ),
                             SizedBox(
                               height: 50,
