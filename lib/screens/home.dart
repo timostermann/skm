@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skm_services/components/sk_button.dart';
+import 'package:skm_services/globals.dart';
 import 'package:skm_services/screens/customer_screen.dart';
 import 'package:skm_services/styles.dart';
 
@@ -51,8 +52,7 @@ class _HomeState extends State<Home> {
                   children: [
                     SvgPicture.asset(
                       'assets/icons/logo_white.svg',
-                      height:
-                          MediaQuery.of(context).size.width < 700 ? 130 : 160,
+                      height: isTablet(context) ? 130 : 160,
                     ),
                     SkButton(
                       child: Text(
@@ -63,7 +63,6 @@ class _HomeState extends State<Home> {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          print(MediaQuery.of(context).size.width);
                           return CustomerScreen();
                         }),
                       ),

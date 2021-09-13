@@ -7,14 +7,17 @@ class SkTextField extends StatelessWidget {
   final String _name;
   final String _label;
   final bool _optional;
+  final bool _last;
 
   const SkTextField({
     required String name,
     required String label,
     required bool optional,
+    bool last = false,
   })  : _name = name,
         _label = label,
-        _optional = optional;
+        _optional = optional,
+        _last = last;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,7 @@ class SkTextField extends StatelessWidget {
         color: SkColors.main300,
         fontSize: 20.0,
       ),
+      textInputAction: _last ? TextInputAction.done : TextInputAction.next,
       decoration: InputDecoration(
         filled: true,
         fillColor: SkColors.main700,
