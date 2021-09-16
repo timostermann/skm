@@ -299,9 +299,20 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                   children: [
                                     SkButton(
                                       onTap: () {
-                                        _customerFormKey.currentState?.save();
-                                        print(_customerFormKey
-                                            .currentState?.value);
+                                        if (_customerFormKey.currentState
+                                                ?.validate() ??
+                                            false) {
+                                          _customerFormKey.currentState?.save();
+                                          print(_customerFormKey
+                                              .currentState?.value);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return ScenarioScreen();
+                                            }),
+                                          );
+                                        }
                                       },
                                       child: Text(
                                         "Weiter",

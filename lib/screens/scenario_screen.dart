@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:skm_services/components/sk_image_button.dart';
 import 'package:skm_services/globals.dart';
 import 'package:skm_services/styles.dart';
 
@@ -75,10 +76,70 @@ class _ScenarioScreenState extends State<ScenarioScreen> {
                         ),
                       ),
                     ),
-                    FormBuilder(
-                      key: _customerFormKey,
-                      child: Column(
-                        children: [],
+                    FractionallySizedBox(
+                      widthFactor: 1,
+                      child: FormBuilder(
+                        key: _customerFormKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: isTablet(context)
+                              ? [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      SkImageButton(
+                                        text: "Nische",
+                                        image: AssetImage(
+                                            'assets/images/kabine.jpeg'),
+                                      ),
+                                      SkImageButton(
+                                        text: "Ecke",
+                                        image: AssetImage(
+                                            'assets/images/kabine.jpeg'),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      SkImageButton(
+                                        text: "Badewanne",
+                                        image: AssetImage(
+                                            'assets/images/kabine.jpeg'),
+                                      ),
+                                      SkImageButton(
+                                        text: "Freistehend",
+                                        image: AssetImage(
+                                            'assets/images/kabine.jpeg'),
+                                      ),
+                                    ],
+                                  ),
+                                ]
+                              : [
+                                  SkImageButton(
+                                    text: "Nische",
+                                    image:
+                                        AssetImage('assets/images/kabine.jpeg'),
+                                  ),
+                                  SkImageButton(
+                                    text: "Ecke",
+                                    image:
+                                        AssetImage('assets/images/kabine.jpeg'),
+                                  ),
+                                  SkImageButton(
+                                    text: "Badewanne",
+                                    image:
+                                        AssetImage('assets/images/kabine.jpeg'),
+                                  ),
+                                  SkImageButton(
+                                    text: "Freistehend",
+                                    image:
+                                        AssetImage('assets/images/kabine.jpeg'),
+                                  ),
+                                ],
+                        ),
                       ),
                     ),
                   ],
