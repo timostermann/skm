@@ -40,7 +40,8 @@ class SkTextField extends StatelessWidget {
           : _validator ??
               (value) {
                 if ((value?.length ?? 0) == 0) {
-                  return "Bitte fülle dieses Feld aus.";
+                  // return "Bitte fülle dieses Feld aus.";
+                  return null;
                 }
                 return null;
               },
