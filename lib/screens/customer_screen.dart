@@ -94,7 +94,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                         child: SkTextField(
                                           name: "first-name",
                                           label: "Vorname",
-                                          optional: false,
+                                          keyboardType: TextInputType.name,
                                         ),
                                       ),
                                       SizedBox(
@@ -105,7 +105,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                         child: SkTextField(
                                           name: "last-name",
                                           label: "Nachname",
-                                          optional: false,
+                                          keyboardType: TextInputType.name,
                                         ),
                                       ),
                                     ],
@@ -117,7 +117,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "street",
                                   label: "Straße & Hausnummer",
-                                  optional: false,
+                                  keyboardType: TextInputType.streetAddress,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -133,7 +133,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                         child: SkTextField(
                                           name: "postcode",
                                           label: "PLZ",
-                                          optional: false,
+                                          keyboardType: TextInputType.number,
                                         ),
                                       ),
                                       SizedBox(
@@ -145,7 +145,6 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                         child: SkTextField(
                                           name: "place",
                                           label: "Wohnort",
-                                          optional: false,
                                         ),
                                       ),
                                     ],
@@ -157,7 +156,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "phone",
                                   label: "Telefonnummer",
-                                  optional: false,
+                                  keyboardType: TextInputType.phone,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -165,6 +164,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "email",
                                   label: "E-Mail-Adresse",
+                                  keyboardType: TextInputType.emailAddress,
                                   optional: true,
                                 ),
                                 SizedBox(
@@ -173,7 +173,6 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "kunden_nr",
                                   label: "Kundennummer",
-                                  optional: false,
                                   last: true,
                                 ),
                                 SizedBox(
@@ -184,15 +183,20 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                   children: [
                                     SkButton(
                                       onTap: () {
-                                        _customerFormKey.currentState?.save();
-                                        print(_customerFormKey
-                                            .currentState?.value);
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) {
-                                            return ScenarioScreen();
-                                          }),
-                                        );
+                                        if (_customerFormKey.currentState
+                                                ?.validate() ??
+                                            false) {
+                                          _customerFormKey.currentState?.save();
+                                          print(_customerFormKey
+                                              .currentState?.value);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return ScenarioScreen();
+                                            }),
+                                          );
+                                        }
                                       },
                                       child: Row(
                                         children: [
@@ -200,7 +204,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                             padding:
                                                 const EdgeInsets.only(left: 20),
                                             child: SvgPicture.asset(
-                                              "assets/icons/circled_tick.svg",
+                                              "assets/icons/tick.svg",
                                               width: 40,
                                             ),
                                           ),
@@ -229,7 +233,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "first-name",
                                   label: "Vorname",
-                                  optional: false,
+                                  keyboardType: TextInputType.name,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -237,7 +241,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "last-name",
                                   label: "Nachname",
-                                  optional: false,
+                                  keyboardType: TextInputType.name,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -245,7 +249,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "street",
                                   label: "Straße & Hausnummer",
-                                  optional: false,
+                                  keyboardType: TextInputType.streetAddress,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -253,7 +257,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "postcode",
                                   label: "PLZ",
-                                  optional: false,
+                                  keyboardType: TextInputType.number,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -261,7 +265,6 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "place",
                                   label: "Wohnort",
-                                  optional: false,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -269,7 +272,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "phone",
                                   label: "Telefonnummer",
-                                  optional: false,
+                                  keyboardType: TextInputType.phone,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -277,6 +280,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "email",
                                   label: "E-Mail-Adresse",
+                                  keyboardType: TextInputType.emailAddress,
                                   optional: true,
                                 ),
                                 SizedBox(
@@ -285,7 +289,6 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "kunden_nr",
                                   label: "Kundennummer",
-                                  optional: false,
                                   last: true,
                                 ),
                                 SizedBox(
