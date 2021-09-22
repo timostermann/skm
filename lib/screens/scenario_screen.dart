@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:skm_services/components/sk_image_button.dart';
@@ -17,7 +18,7 @@ class _ScenarioScreenState extends State<ScenarioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        brightness: Brightness.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         backgroundColor: SkColors.main700,
         centerTitle: true,
         title: SvgPicture.asset(

@@ -13,6 +13,8 @@ dependencies:
   flutter_svg: 
   flutter_bloc: 
   bloc: 
+  svg_path_parser: ^1.1.1
+  touchable: ^1.0.0
 
 cupertino_icons: ^1.0.2
 

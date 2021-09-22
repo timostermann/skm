@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skm_services/styles.dart';
 
@@ -12,7 +13,7 @@ class _SketchScreenState extends State<SketchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        brightness: Brightness.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         backgroundColor: SkColors.main700,
         centerTitle: true,
         title: SvgPicture.asset(
