@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skm_services/screens/sketch_screen.dart';
 import 'package:skm_services/styles.dart';
 
 class SkImageButton extends StatelessWidget {
@@ -16,6 +17,12 @@ class SkImageButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print("$_text clicked!");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return SketchScreen();
+          }),
+        );
       },
       child: Container(
         margin: EdgeInsets.symmetric(
