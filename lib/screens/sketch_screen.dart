@@ -13,7 +13,7 @@ class _SketchScreenState extends State<SketchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: SkColors.main700,
         centerTitle: true,
         title: SvgPicture.asset(

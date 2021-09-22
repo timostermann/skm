@@ -9,7 +9,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Home(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: "Lato"),
+      theme: ThemeData(
+        fontFamily: "Lato",
+      ),
     );
   }
 }

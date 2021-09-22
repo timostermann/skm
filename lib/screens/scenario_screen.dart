@@ -18,7 +18,7 @@ class _ScenarioScreenState extends State<ScenarioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: SkColors.main700,
         centerTitle: true,
         title: SvgPicture.asset(

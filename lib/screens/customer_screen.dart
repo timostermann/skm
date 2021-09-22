@@ -20,7 +20,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: SkColors.main700,
         centerTitle: true,
         title: SvgPicture.asset(
@@ -134,7 +134,9 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                         child: SkTextField(
                                           name: "postcode",
                                           label: "PLZ",
-                                          keyboardType: TextInputType.number,
+                                          keyboardType:
+                                              TextInputType.numberWithOptions(
+                                                  signed: true),
                                         ),
                                       ),
                                       SizedBox(
@@ -258,7 +260,9 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "postcode",
                                   label: "PLZ",
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.numberWithOptions(
+                                    signed: true,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -273,7 +277,9 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 SkTextField(
                                   name: "phone",
                                   label: "Telefonnummer",
-                                  keyboardType: TextInputType.phone,
+                                  keyboardType: TextInputType.numberWithOptions(
+                                    signed: true,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 40,
