@@ -9,6 +9,10 @@ class SketchScreen extends StatefulWidget {
 }
 
 class _SketchScreenState extends State<SketchScreen> {
+  var _x = 15.0;
+  var _y = 15.0;
+  final GlobalKey stackKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,27 +25,63 @@ class _SketchScreenState extends State<SketchScreen> {
           height: 35,
         ),
       ),
-      body: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              SkColors.main300,
-              SkColors.main400,
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            stops: [0.6, 1],
-          ),
-        ),
-        child: SizedBox.expand(
-          child: SingleChildScrollView(
-            child: SafeArea(
-              child: Container(),
+      body: InteractiveViewer(
+        panEnabled: false,
+        minScale: 0.5,
+        maxScale: 2,
+        child: Stack(
+          key: stackKey,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    SkColors.main300,
+                    SkColors.main400,
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  stops: [0.6, 1],
+                ),
+              ),
             ),
-          ),
+            Positioned(
+              left: _x,
+              top: _y,
+              child: Draggable(
+                feedback:
+                    Container(height: 200, width: 200, color: Colors.amber),
+                child: Container(height: 200, width: 200, color: Colors.amber),
+                childWhenDragging:
+                    Container(height: 200, width: 200, color: Colors.grey),
+                onDragEnd: (dragDetails) {
+                  setState(() {
+                    final parentPos = stackKey.globalPaintBounds;
+                    if (parentPos != null) {
+                      _x = dragDetails.offset.dx - parentPos.left;
+                      _y = dragDetails.offset.dy - parentPos.top;
+                    }
+                  });
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+}
+
+extension GlobalKeyExtension on GlobalKey {
+  Rect? get globalPaintBounds {
+    final renderObject = currentContext?.findRenderObject();
+    var translation = renderObject?.getTransformTo(null).getTranslation();
+    if (translation != null && renderObject?.paintBounds != null) {
+      return renderObject!.paintBounds
+          .shift(Offset(translation.x, translation.y));
+    } else {
+      return null;
+    }
   }
 }
