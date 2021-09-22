@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skm_services/components/sketch_components/drag_node.dart';
 import 'package:skm_services/styles.dart';
 
 class SketchScreen extends StatefulWidget {
@@ -50,11 +51,9 @@ class _SketchScreenState extends State<SketchScreen> {
               left: _x,
               top: _y,
               child: Draggable(
-                feedback:
-                    Container(height: 200, width: 200, color: Colors.amber),
-                child: Container(height: 200, width: 200, color: Colors.amber),
-                childWhenDragging:
-                    Container(height: 200, width: 200, color: Colors.grey),
+                feedback: DragNode(SkColors.main500, SkColors.main800),
+                child: DragNode(SkColors.main500, SkColors.main800),
+                childWhenDragging: DragNode(SkColors.main500, SkColors.main500),
                 onDragEnd: (dragDetails) {
                   setState(() {
                     final parentPos = stackKey.globalPaintBounds;
