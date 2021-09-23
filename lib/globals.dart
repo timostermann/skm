@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
+double getHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height;
+}
+
+double getWidth(BuildContext context) {
+  return MediaQuery.of(context).size.width;
+}
+
 bool isTablet(BuildContext context, [bool? useHeight]) {
   if (useHeight ?? false) {
-    return MediaQuery.of(context).size.height > 800;
+    return getHeight(context) > 800;
   } else {
-    return MediaQuery.of(context).size.width > 700;
+    return getWidth(context) > 700;
   }
 }

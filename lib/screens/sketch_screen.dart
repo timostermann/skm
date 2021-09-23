@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skm_services/components/sketch_components/drag_node.dart';
+import 'package:skm_services/components/sketch_components/drag_line.dart';
+import 'package:skm_services/globals.dart';
 import 'package:skm_services/styles.dart';
 
 class SketchScreen extends StatefulWidget {
@@ -26,46 +28,64 @@ class _SketchScreenState extends State<SketchScreen> {
           height: 35,
         ),
       ),
-      body: InteractiveViewer(
-        panEnabled: false,
-        minScale: 0.5,
-        maxScale: 2,
-        child: Stack(
-          key: stackKey,
-          children: [
-            Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    SkColors.main300,
-                    SkColors.main400,
-                  ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  stops: [0.6, 1],
+      body: Container(
+        child: InteractiveViewer(
+          panEnabled: false,
+          minScale: 0.5,
+          constrained: true,
+          maxScale: 2,
+          child: Stack(
+            key: stackKey,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      SkColors.main300,
+                      SkColors.main400,
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    stops: [0.6, 1],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              left: _x,
-              top: _y,
-              child: Draggable(
-                feedback: DragNode(SkColors.main500, SkColors.main800),
-                child: DragNode(SkColors.main500, SkColors.main800),
-                childWhenDragging: DragNode(SkColors.main500, SkColors.main500),
-                onDragEnd: (dragDetails) {
-                  setState(() {
-                    final parentPos = stackKey.globalPaintBounds;
-                    if (parentPos != null) {
-                      _x = dragDetails.offset.dx - parentPos.left;
-                      _y = dragDetails.offset.dy - parentPos.top;
-                    }
-                  });
-                },
+              Positioned(
+                top: _y + 10,
+                left: 15,
+                child: DragLine(_x),
               ),
-            ),
-          ],
+              Positioned(
+                left: _x,
+                top: _y,
+                child: Draggable(
+                  axis: Axis.horizontal,
+                  feedback: DragNode(SkColors.main500, SkColors.main800),
+                  child: DragNode(SkColors.main500, SkColors.main800),
+                  childWhenDragging:
+                      DragNode(SkColors.main500, SkColors.main500),
+                  onDragEnd: (dragDetails) {
+                    setState(() {
+                      final parentPos = stackKey.globalPaintBounds;
+                      if (parentPos != null) {
+                        if (dragDetails.offset.dx - parentPos.left >
+                            getWidth(context) - 45) {
+                          _x = getWidth(context) - 45;
+                        } else if (dragDetails.offset.dx - parentPos.left <
+                            15) {
+                          _x = 15;
+                        } else {
+                          _x = dragDetails.offset.dx - parentPos.left;
+                        }
+                        // _y = dragDetails.offset.dy - parentPos.top;
+                      }
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
