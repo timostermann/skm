@@ -12,7 +12,7 @@ class SketchScreen extends StatefulWidget {
 }
 
 class _SketchScreenState extends State<SketchScreen> {
-  var _x = 15.0;
+  var _x = 30.0;
   var _y = 15.0;
   final GlobalKey stackKey = GlobalKey();
 
@@ -60,25 +60,26 @@ class _SketchScreenState extends State<SketchScreen> {
                 left: _x,
                 top: _y,
                 child: Draggable(
-                  axis: Axis.horizontal,
-                  feedback: DragNode(SkColors.main500, SkColors.main800),
+                  feedback: Container(),
                   child: DragNode(SkColors.main500, SkColors.main800),
                   childWhenDragging:
-                      DragNode(SkColors.main500, SkColors.main500),
-                  onDragEnd: (dragDetails) {
+                      DragNode(SkColors.main400, SkColors.main800),
+                  onDragUpdate: (dragUpdateDetails) {
                     setState(() {
                       final parentPos = stackKey.globalPaintBounds;
+                      print(parentPos);
                       if (parentPos != null) {
-                        if (dragDetails.offset.dx - parentPos.left >
+                        if (dragUpdateDetails.localPosition.dx -
+                                parentPos.left >
                             getWidth(context) - 45) {
                           _x = getWidth(context) - 45;
-                        } else if (dragDetails.offset.dx - parentPos.left <
+                        } else if (dragUpdateDetails.localPosition.dx -
+                                parentPos.left <
                             15) {
                           _x = 15;
                         } else {
-                          _x = dragDetails.offset.dx - parentPos.left;
+                          _x = dragUpdateDetails.localPosition.dx - 15;
                         }
-                        // _y = dragDetails.offset.dy - parentPos.top;
                       }
                     });
                   },
