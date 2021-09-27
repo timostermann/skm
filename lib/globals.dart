@@ -22,7 +22,7 @@ double roundToNthDecimal(double number, int n) {
   return ((number * mod).round().toDouble() / mod);
 }
 
-double getBetaAngle(num aLength, num bLength, int? decimals) {
+double getBetaAngle(num aLength, num bLength, [int? decimals]) {
   return decimals != null
       ? roundToNthDecimal(
           arcToSquareMeasure(math.atan(aLength / bLength)), decimals)
@@ -43,12 +43,15 @@ double lawOfSines(double alpha, double aLength, double beta) {
 }
 
 // de: Kosinussatz
-double lawOfCosines(double alpha, double beta, double gamma) {
-  return math.sqrt(math.pow(alpha, 2) +
-      math.pow(beta, 2) -
-      2 * alpha * beta * math.cos(squareToArcMeasure(gamma)));
+double lawOfCosines(double aLength, double bLength, [double? gamma]) {
+  print("a: " + aLength.toString());
+  print("b: " + bLength.toString());
+  return math.sqrt(math.pow(aLength, 2) +
+      math.pow(bLength, 2) -
+      2 * aLength * bLength * math.cos(squareToArcMeasure(gamma ?? 90.0)));
 }
 
+// de: Winkelsummensatz
 double getAngleByAngleSum(double alpha, double beta) {
   return 180.0 - alpha - beta;
 }

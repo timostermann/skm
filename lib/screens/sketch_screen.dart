@@ -12,8 +12,9 @@ class SketchScreen extends StatefulWidget {
 }
 
 class _SketchScreenState extends State<SketchScreen> {
-  var _x = 30.0;
-  var _y = 15.0;
+  var _x = 200.0;
+  var _y = 200.0;
+  var _offset = 0.0;
   final GlobalKey stackKey = GlobalKey();
 
   @override
@@ -52,13 +53,62 @@ class _SketchScreenState extends State<SketchScreen> {
                 ),
               ),
               Positioned(
-                top: _y + 10,
-                left: 15,
-                child: DragLine(_x),
+                top: 25,
+                left: 30,
+                child: DragLine(
+                  length: _x,
+                  onSubmitted: (newValue) {
+                    if (double.tryParse(newValue) != null &&
+                        double.tryParse(newValue)! > getWidth(context) - 100) {
+                      _x = getWidth(context) - 100;
+                    } else if (double.tryParse(newValue) != null &&
+                        double.tryParse(newValue)! < 100) {
+                      _x = 100;
+                    } else {
+                      _x = double.tryParse(newValue) ?? _x;
+                    }
+                  },
+                ),
               ),
               Positioned(
-                left: _x,
-                top: _y,
+                top: 25,
+                left: _x + 25,
+                child: DragLine(
+                  isVertical: true,
+                  length: _y,
+                  onSubmitted: (newValue) {
+                    if (double.tryParse(newValue) != null &&
+                        double.tryParse(newValue)! > getHeight(context) - 200) {
+                      _y = getHeight(context) - 200;
+                    } else if (double.tryParse(newValue) != null &&
+                        double.tryParse(newValue)! < 100) {
+                      _y = 100;
+                    } else {
+                      _y = double.tryParse(newValue) ?? _x;
+                    }
+                  },
+                ),
+              ),
+              Positioned(
+                top: 25,
+                left: 30,
+                child: DragLine(
+                  isVertical: true,
+                  length: _y - 10,
+                  hasInput: false,
+                ),
+              ),
+              Positioned(
+                top: _y + 10,
+                left: 30 + _offset,
+                child: DragLine(
+                  length: _x - _offset,
+                  hasInput: false,
+                ),
+              ),
+              Positioned(
+                left: _x + 15,
+                top: 15,
                 child: Draggable(
                   feedback: Container(),
                   child: DragNode(SkColors.main500, SkColors.main800),
@@ -71,14 +121,72 @@ class _SketchScreenState extends State<SketchScreen> {
                       if (parentPos != null) {
                         if (dragUpdateDetails.localPosition.dx -
                                 parentPos.left >
-                            getWidth(context) - 45) {
-                          _x = getWidth(context) - 45;
+                            getWidth(context) - 100) {
+                          _x = getWidth(context) - 100;
                         } else if (dragUpdateDetails.localPosition.dx -
                                 parentPos.left <
-                            15) {
-                          _x = 15;
+                            100) {
+                          _x = 100;
                         } else {
                           _x = dragUpdateDetails.localPosition.dx - 15;
+                        }
+                      }
+                    });
+                  },
+                ),
+              ),
+              Positioned(
+                left: _x + 15,
+                top: _y,
+                child: Draggable(
+                  feedback: Container(),
+                  child: DragNode(SkColors.main500, SkColors.main800),
+                  childWhenDragging:
+                      DragNode(SkColors.main400, SkColors.main800),
+                  onDragUpdate: (dragUpdateDetails) {
+                    setState(() {
+                      final parentPos = stackKey.globalPaintBounds;
+                      print(parentPos);
+                      if (parentPos != null) {
+                        if (dragUpdateDetails.localPosition.dy - parentPos.top >
+                            getHeight(context) - 200) {
+                          _y = getHeight(context) - 200;
+                        } else if (dragUpdateDetails.localPosition.dy -
+                                parentPos.top <
+                            100) {
+                          _y = 100;
+                        } else {
+                          print(dragUpdateDetails.localPosition.dy);
+                          print(parentPos.top);
+                          print(getHeight(context));
+                          // TODO wieso -95 nötig?
+                          _y = dragUpdateDetails.localPosition.dy - 100;
+                        }
+                      }
+                    });
+                  },
+                ),
+              ),
+              Positioned(
+                left: 20 + _offset,
+                top: _y,
+                child: Draggable(
+                  feedback: Container(),
+                  child: DragNode(SkColors.main500, SkColors.main800),
+                  childWhenDragging:
+                      DragNode(SkColors.main400, SkColors.main800),
+                  onDragUpdate: (dragUpdateDetails) {
+                    setState(() {
+                      final parentPos = stackKey.globalPaintBounds;
+                      print(dragUpdateDetails.localPosition.dx);
+                      if (parentPos != null) {
+                        if (dragUpdateDetails.localPosition.dx - 15 > 200) {
+                          _offset = 200;
+                        } else if (dragUpdateDetails.localPosition.dx - 15 <
+                            0) {
+                          _offset = 0;
+                        } else {
+                          _offset = dragUpdateDetails.localPosition.dx - 15;
                         }
                       }
                     });
