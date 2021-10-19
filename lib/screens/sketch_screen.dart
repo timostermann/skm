@@ -100,9 +100,9 @@ class _SketchScreenState extends State<SketchScreen> {
               ),
               Positioned(
                 top: _y + 10,
-                left: 30 + _offset,
+                left: _offset,
                 child: DragLine(
-                  length: _x - _offset,
+                  length: _x - _offset + 25,
                   hasInput: false,
                 ),
               ),
@@ -168,7 +168,7 @@ class _SketchScreenState extends State<SketchScreen> {
                 ),
               ),
               Positioned(
-                left: 20 + _offset,
+                left: _offset,
                 top: _y,
                 child: Draggable(
                   feedback: Container(),

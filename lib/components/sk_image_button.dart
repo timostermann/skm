@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skm_services/screens/sketch_screen.dart';
+import 'package:skm_services/screens/sketch_screen_painter.dart';
 import 'package:skm_services/styles.dart';
 
 class SkImageButton extends StatelessWidget {
