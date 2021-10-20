@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skm_services/screens/sketch_screen_painter.dart';
+import 'package:skm_services/features/sketch/presentation/page/sketch_screen_painter.dart';
 import 'package:skm_services/styles.dart';
 
 class SkImageButton extends StatelessWidget {
@@ -20,7 +20,7 @@ class SkImageButton extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return SketchScreen();
+            return SketchScreenWrapper();
           }),
         );
       },

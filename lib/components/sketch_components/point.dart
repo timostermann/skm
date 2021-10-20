@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skm_services/components/sketch_components/interaction_type.dart';
+import 'package:skm_services/enums/interaction_type.dart';
 
 class Point {
   InteractionType interactionType;

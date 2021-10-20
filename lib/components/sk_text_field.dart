@@ -9,6 +9,7 @@ class SkTextField extends StatelessWidget {
   final String? Function(String?)? _validator;
   final bool _last;
   final TextInputType _keyboardType;
+  final String? _initialValue;
 
   const SkTextField(
       {required String name,
@@ -16,13 +17,15 @@ class SkTextField extends StatelessWidget {
       bool optional = false,
       String? Function(String?)? validator,
       bool last = false,
-      TextInputType keyboardType = TextInputType.text})
+      TextInputType keyboardType = TextInputType.text,
+      String? initialValue})
       : _name = name,
         _label = label,
         _optional = optional,
         _validator = validator,
         _last = last,
-        _keyboardType = keyboardType;
+        _keyboardType = keyboardType,
+        _initialValue = initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,7 @@ class SkTextField extends StatelessWidget {
         color: SkColors.main300,
         fontSize: 20.0,
       ),
+      initialValue: _initialValue,
       textInputAction: _last ? TextInputAction.done : TextInputAction.next,
       keyboardType: _keyboardType,
       validator: _optional

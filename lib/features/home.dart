@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skm_services/components/sk_button.dart';
 import 'package:skm_services/globals.dart';
-import 'package:skm_services/screens/customer_screen.dart';
+import 'package:skm_services/features/customer/presentation/page/customer_screen.dart';
 import 'package:skm_services/styles.dart';
 
 class Home extends StatefulWidget {
