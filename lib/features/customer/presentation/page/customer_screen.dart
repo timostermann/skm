@@ -355,13 +355,32 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                             );
                                           }
                                         },
-                                        child: Text(
-                                          "Weiter",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 28,
-                                          ),
-                                          textAlign: TextAlign.center,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20),
+                                              child: SvgPicture.asset(
+                                                "assets/icons/tick.svg",
+                                                width: 40,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  right: 40,
+                                                ),
+                                                child: Text(
+                                                  "Weiter",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 28,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],

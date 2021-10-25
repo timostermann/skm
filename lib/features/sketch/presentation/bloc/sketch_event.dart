@@ -13,9 +13,17 @@ class SketchUpdateProperties extends SketchEvent {
   SketchUpdateProperties(this.template);
 }
 
+class SketchToggleMode extends SketchEvent {
+  final bool enableInputMode;
+  final SketchTemplate template;
+
+  SketchToggleMode({required this.enableInputMode, required this.template});
+}
+
 class SketchToggleTextPopup extends SketchEvent {
   final SketchTemplate template;
   final int coordinateIndex;
 
-  SketchToggleTextPopup({required this.template, required this.coordinateIndex});
+  SketchToggleTextPopup(
+      {required this.template, required this.coordinateIndex});
 }

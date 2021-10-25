@@ -11,21 +11,17 @@ part 'sketch_state.dart';
 class SketchBloc extends Bloc<SketchEvent, SketchState> {
   final Cache cache;
 
-  SketchBloc(this.cache) : super(SketchInitial()) {
+  SketchBloc(this.cache)
+      : super(SketchLoaded(
+            template: SketchTemplate.defaultCoordinates(TemplateType.Free))) {
     on<SketchEvent>((event, emit) async {
-      print(event);
-
       if (event is SketchLoadTemplate) {
-        print(event.type);
-        print("Hallo");
         emit(SketchLoaded(
             template: cache.sketch[event.type] ??
                 SketchTemplate.defaultCoordinates(event.type)));
-        print(cache.sketch[event.type]);
       }
 
       if (event is SketchUpdateProperties) {
-        print(event.template.type);
         cache.sketch[event.template.type] = event.template;
         emit(SketchLoaded(template: event.template));
       }
@@ -35,8 +31,13 @@ class SketchBloc extends Bloc<SketchEvent, SketchState> {
             template: event.template, coordinateIndex: event.coordinateIndex));
       }
 
+      if (event is SketchToggleMode) {
+        if (event.enableInputMode) {
+          emit(SketchInputMode(template: event.template));
+        } else {
+          emit(SketchDragMode(template: event.template));
+        }
+      }
     });
   }
-
-
 }

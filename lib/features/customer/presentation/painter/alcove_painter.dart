@@ -41,7 +41,7 @@ class AlcovePainter extends BaseSketchPainter {
     drawLine(touchyCanvas, constraints[1], constraints[3]);
     drawLine(touchyCanvas, constraints[2], constraints[3]);
 
-     drawNode(
+    drawNode(
       canvas: touchyCanvas,
       center: constraints[1],
       onPanUpdate: (dragDetails) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skm_services/components/sk_button.dart';
 import 'package:skm_services/enums/template_type.dart';
 import 'package:skm_services/features/customer/presentation/painter/alcove_painter.dart';
 import 'package:skm_services/features/customer/presentation/painter/corner_painter.dart';
@@ -95,27 +96,108 @@ class _SketchScreenState extends State<SketchScreen> {
                   await showInputDialog(context, state);
                 }
               },
-              buildWhen: (previous, current) =>
-                  (current is! SketchShowTextField),
+              buildWhen: (previous, current) => (current is SketchLoaded),
               builder: (context, state) {
-                return (state is SketchLoaded)
-                    ? Padding(
-                        padding: const EdgeInsets.all(50.0),
-                        child: SizedBox.expand(
-                          child: AnimatedContainer(
-                            color: Colors.transparent,
-                            duration: Duration(seconds: 1),
-                            child: CanvasTouchDetector(
-                              builder: (context) => CustomPaint(
-                                painter:
-                                    getPainter(_type, context, state.template),
+                return Padding(
+                  padding: const EdgeInsets.all(50.0),
+                  child: SizedBox.expand(
+                    child: AnimatedContainer(
+                      color: Colors.transparent,
+                      duration: Duration(seconds: 1),
+                      child: CanvasTouchDetector(
+                        builder: (context) => CustomPaint(
+                          painter: getPainter(_type, context, state.template),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            Positioned(
+              right: 30.0,
+              bottom: 50.0,
+              child: SkButton(
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: SvgPicture.asset(
+                        "assets/icons/tick.svg",
+                        width: 40,
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          right: 40,
+                        ),
+                        child: Text(
+                          "Weiter",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: () => {},
+              ),
+            ),
+            Positioned(
+              left: 30.0,
+              bottom: 50.0,
+              child: BlocBuilder<SketchBloc, SketchState>(
+                buildWhen: (previous, current) =>
+                    (current is SketchInputMode || current is SketchDragMode),
+                builder: (context, state) {
+                  return SkButton(
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Icon(
+                            (state is SketchInputMode)
+                                ? Icons.keyboard
+                                : Icons.swipe,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              right: 10,
+                            ),
+                            child: Text(
+                              "Modus: " +
+                                  ((state is SketchInputMode)
+                                      ? "Eingabe"
+                                      : "Ziehen"),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 19,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
-                      )
-                    : Container();
-              },
+                      ],
+                    ),
+                    onTap: () {
+                      if (state is SketchInputMode) {
+                        context.read<SketchBloc>().add(SketchToggleMode(
+                            enableInputMode: false, template: state.template));
+                      } else {
+                        context.read<SketchBloc>().add(SketchToggleMode(
+                            enableInputMode: true, template: state.template));
+                      }
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
