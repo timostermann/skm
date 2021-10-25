@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:skm_services/components/sk_image_button.dart';
+import 'package:skm_services/enums/template_type.dart';
 import 'package:skm_services/globals.dart';
 import 'package:skm_services/styles.dart';
 
@@ -92,12 +93,14 @@ class _ScenarioScreenState extends State<ScenarioScreen> {
                                       SkImageButton(
                                         text: "Nische",
                                         image: AssetImage(
-                                            'assets/images/kabine.jpeg'),
+                                            'assets/images/nische.jpg'),
+                                        type: TemplateType.Alcove,
                                       ),
                                       SkImageButton(
                                         text: "Ecke",
                                         image: AssetImage(
-                                            'assets/images/kabine.jpeg'),
+                                            'assets/images/ecke.jpg'),
+                                        type: TemplateType.Corner,
                                       ),
                                     ],
                                   ),
@@ -108,12 +111,14 @@ class _ScenarioScreenState extends State<ScenarioScreen> {
                                       SkImageButton(
                                         text: "Badewanne",
                                         image: AssetImage(
-                                            'assets/images/kabine.jpeg'),
+                                            'assets/images/badewanne.jpg'),
+                                        type: TemplateType.Tub,
                                       ),
                                       SkImageButton(
                                         text: "Freistehend",
                                         image: AssetImage(
-                                            'assets/images/kabine.jpeg'),
+                                            'assets/images/freistehend.jpg'),
+                                        type: TemplateType.Free,
                                       ),
                                     ],
                                   ),
@@ -122,22 +127,25 @@ class _ScenarioScreenState extends State<ScenarioScreen> {
                                   SkImageButton(
                                     text: "Nische",
                                     image:
-                                        AssetImage('assets/images/kabine.jpeg'),
+                                        AssetImage('assets/images/nische.jpg'),
+                                    type: TemplateType.Alcove,
                                   ),
                                   SkImageButton(
                                     text: "Ecke",
-                                    image:
-                                        AssetImage('assets/images/kabine.jpeg'),
+                                    image: AssetImage('assets/images/ecke.jpg'),
+                                    type: TemplateType.Corner,
                                   ),
                                   SkImageButton(
                                     text: "Badewanne",
-                                    image:
-                                        AssetImage('assets/images/kabine.jpeg'),
+                                    image: AssetImage(
+                                        'assets/images/badewanne.jpg'),
+                                    type: TemplateType.Tub,
                                   ),
                                   SkImageButton(
                                     text: "Freistehend",
-                                    image:
-                                        AssetImage('assets/images/kabine.jpeg'),
+                                    image: AssetImage(
+                                        'assets/images/freistehend.jpg'),
+                                    type: TemplateType.Free,
                                   ),
                                 ],
                         ),

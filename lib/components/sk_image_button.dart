@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:skm_services/features/sketch/presentation/page/sketch_screen_painter.dart';
+import 'package:skm_services/enums/template_type.dart';
+import 'package:skm_services/features/sketch/presentation/page/sketch_screen.dart';
 import 'package:skm_services/styles.dart';
 
 class SkImageButton extends StatelessWidget {
   final String _text;
   final ImageProvider<Object> _image;
+  final TemplateType _type;
 
   const SkImageButton({
     required String text,
     required ImageProvider<Object> image,
+    required TemplateType type,
   })  : _text = text,
-        _image = image;
+        _image = image,
+        _type = type;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class SkImageButton extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return SketchScreenWrapper();
+            return SketchScreenWrapper(type: _type);
           }),
         );
       },

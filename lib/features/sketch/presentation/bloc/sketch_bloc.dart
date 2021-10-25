@@ -16,12 +16,16 @@ class SketchBloc extends Bloc<SketchEvent, SketchState> {
       print(event);
 
       if (event is SketchLoadTemplate) {
+        print(event.type);
+        print("Hallo");
         emit(SketchLoaded(
             template: cache.sketch[event.type] ??
                 SketchTemplate.defaultCoordinates(event.type)));
+        print(cache.sketch[event.type]);
       }
 
       if (event is SketchUpdateProperties) {
+        print(event.template.type);
         cache.sketch[event.template.type] = event.template;
         emit(SketchLoaded(template: event.template));
       }
@@ -30,6 +34,9 @@ class SketchBloc extends Bloc<SketchEvent, SketchState> {
         emit(SketchShowTextField(
             template: event.template, coordinateIndex: event.coordinateIndex));
       }
+
     });
   }
+
+
 }

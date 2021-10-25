@@ -10,7 +10,7 @@ Future<void> initializeIoC() async {
 
 Future _registerBlocs() async {
   singleton<Cache>(() => Cache());
-  singleton<SketchBloc>(() => SketchBloc(get<Cache>()));
+  factory<SketchBloc>(() => SketchBloc(get<Cache>()));
 }
 
 T get<T extends Object>({dynamic param}) {

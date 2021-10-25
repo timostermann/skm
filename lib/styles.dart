@@ -15,4 +15,8 @@ class SkColors {
   static const Color accent600 = Color(0xffff6c0a);
   static const Color accent800 = Color(0xffa34100);
   static const Color accent900 = Color(0xff522100);
+
+  static const Color alternative1 = Color(0xff25265a);
+  static const Color alternative2 = Color(0xff267938);
+  static const Color alternative3 = Color(0xff7c6a0c);
 }

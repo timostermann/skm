@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skm_services/enums/interaction_type.dart';
 import 'package:skm_services/components/sketch_components/point.dart';
-import 'package:skm_services/features/sketch/presentation/bloc/sketch_bloc.dart';
 import 'package:skm_services/models/sketch_template.dart';
 import 'package:touchable/touchable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class BaseSketchPainter extends CustomPainter {
   final BuildContext context;
@@ -14,11 +12,15 @@ abstract class BaseSketchPainter extends CustomPainter {
 
   void paint(Canvas canvas, Size size);
 
-  void drawNode(TouchyCanvas canvas, Point center,
-      Function(DragUpdateDetails)? onPanUpdate, [Function(LongPressStartDetails)? onLongPress]) {
+  void drawNode(
+      {required TouchyCanvas canvas,
+      required Point center,
+      Function(DragUpdateDetails)? onPanUpdate,
+      required Stopwatch clock,
+      Function(TapDownDetails)? onDoubleTap}) {
     canvas.drawCircle(
       center.offset,
-      20,
+      18,
       Paint()..color = center.interactionType.color,
       onPanUpdate: onPanUpdate,
       onPanStart: (dragDownDetails) {
@@ -31,16 +33,34 @@ abstract class BaseSketchPainter extends CustomPainter {
         print("dragged!");
       },
       onTapDown: (tapDownDetails) {
+        print(clock.isRunning);
+        if (!clock.isRunning) {
+          print("tappy");
+          clock.start();
+          DragUpdateDetails dragDetails = DragUpdateDetails(
+            globalPosition: tapDownDetails.globalPosition,
+            localPosition: tapDownDetails.localPosition,
+          );
+          if (onPanUpdate != null) onPanUpdate(dragDetails);
+          return;
+        }
+        print("tap");
+
+        if (clock.elapsedMilliseconds < 500) {
+          if (onDoubleTap != null) onDoubleTap(tapDownDetails);
+        }
+        print(clock.elapsed);
+
+        clock.stop();
+        clock.reset();
+      },
+      onLongPressMoveUpdate: (longPressDetails) {
         DragUpdateDetails dragDetails = DragUpdateDetails(
-          globalPosition: tapDownDetails.globalPosition,
-          localPosition: tapDownDetails.localPosition,
+          globalPosition: longPressDetails.globalPosition,
+          localPosition: longPressDetails.localPosition,
         );
         if (onPanUpdate != null) onPanUpdate(dragDetails);
-        print("tapped!");
       },
-      onLongPressStart: (longPressStartDetails) {
-        if (onLongPress != null) onLongPress(longPressStartDetails);
-      }
     );
   }
 
@@ -50,7 +70,7 @@ abstract class BaseSketchPainter extends CustomPainter {
       end.offset,
       Paint()
         ..color = Colors.black
-        ..strokeWidth = 10
+        ..strokeWidth = 5
         ..strokeCap = StrokeCap.round,
     );
   }

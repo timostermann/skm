@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skm_services/enums/template_type.dart';
-import 'package:skm_services/features/customer/presentation/painter/rect_painter.dart';
+import 'package:skm_services/features/customer/presentation/painter/alcove_painter.dart';
+import 'package:skm_services/features/customer/presentation/painter/corner_painter.dart';
+import 'package:skm_services/features/customer/presentation/painter/free_rect_painter.dart';
+import 'package:skm_services/features/customer/presentation/painter/tub_painter.dart';
 import 'package:skm_services/features/sketch/presentation/bloc/sketch_bloc.dart';
 import 'package:skm_services/models/sketch_template.dart';
 import 'package:skm_services/styles.dart';
@@ -12,28 +15,45 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skm_services/dependencies.dart';
 
 class SketchScreenWrapper extends StatelessWidget {
-  const SketchScreenWrapper({Key? key}) : super(key: key);
+  final TemplateType _type;
+
+  const SketchScreenWrapper({
+    Key? key,
+    required type,
+  })  : _type = type,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SketchBloc>(
       create: (_) => get<SketchBloc>(),
-      child: SketchScreen(),
+      child: SketchScreen(type: _type),
     );
   }
 }
 
 class SketchScreen extends StatefulWidget {
+  final TemplateType _type;
+
+  const SketchScreen({
+    required type,
+  }) : _type = type;
+
   @override
-  _SketchScreenState createState() => _SketchScreenState();
+  _SketchScreenState createState() => _SketchScreenState(type: _type);
 }
 
 class _SketchScreenState extends State<SketchScreen> {
   final GlobalKey stackKey = GlobalKey();
+  final TemplateType _type;
+
+  _SketchScreenState({
+    required type,
+  }) : _type = type;
 
   @override
   void initState() {
-    context.read<SketchBloc>().add(SketchLoadTemplate(type: TemplateType.One));
+    context.read<SketchBloc>().add(SketchLoadTemplate(type: _type));
     super.initState();
   }
 
@@ -82,26 +102,13 @@ class _SketchScreenState extends State<SketchScreen> {
                     ? Padding(
                         padding: const EdgeInsets.all(50.0),
                         child: SizedBox.expand(
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTapDown: (detail) {
-                              print(detail.localPosition.dx);
-                              print(detail.localPosition.dy);
-                            },
-                            onLongPressDown: (detail) {
-                              print(detail.localPosition.dx);
-                              print(detail.localPosition.dy);
-                            },
-                            child: AnimatedContainer(
-                              color: Colors.transparent,
-                              duration: Duration(seconds: 1),
-                              child: CanvasTouchDetector(
-                                builder: (context) => CustomPaint(
-                                  painter: RectPainter(
-                                    context,
-                                    state.template,
-                                  ),
-                                ),
+                          child: AnimatedContainer(
+                            color: Colors.transparent,
+                            duration: Duration(seconds: 1),
+                            child: CanvasTouchDetector(
+                              builder: (context) => CustomPaint(
+                                painter:
+                                    getPainter(_type, context, state.template),
                               ),
                             ),
                           ),
@@ -126,14 +133,16 @@ class _SketchScreenState extends State<SketchScreen> {
           content: TextField(controller: _controller),
           actions: [
             TextButton(
-                child: Text('Ok'),
+                child: Text('Bestätigen'),
                 onPressed: () {
                   context.read<SketchBloc>().add(
                         SketchUpdateProperties(
                           SketchTemplate.copy(
                             state.template,
                             state.coordinateIndex,
-                            double.parse(_controller.value.text),
+                            double.tryParse(_controller.value.text) ??
+                                state.template.interactiveCoordinates[
+                                    state.coordinateIndex],
                           ),
                         ),
                       );
@@ -143,5 +152,17 @@ class _SketchScreenState extends State<SketchScreen> {
         );
       },
     );
+  }
+
+  CustomPainter? getPainter(
+      TemplateType _type, BuildContext context, SketchTemplate template) {
+    final Map<TemplateType, CustomPainter> painter = {
+      TemplateType.Corner: CornerPainter(context, template),
+      TemplateType.Free: FreeRectPainter(context, template),
+      TemplateType.Tub: TubPainter(context, template),
+      TemplateType.Alcove: AlcovePainter(context, template),
+    };
+
+    return painter[_type];
   }
 }

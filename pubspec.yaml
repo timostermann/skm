@@ -16,6 +16,7 @@ dependencies:
   svg_path_parser: ^1.1.1
   touchable: ^1.0.0
   get_it:
+  clock: ^1.1.0
 
 
 cupertino_icons: ^1.0.2

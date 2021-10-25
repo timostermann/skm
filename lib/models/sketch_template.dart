@@ -18,4 +18,12 @@ class SketchTemplate {
     return SketchTemplate(
         interactiveCoordinates: coordinates, type: template.type);
   }
+
+  @override
+  String toString() {
+    return "coordinates: " +
+        interactiveCoordinates.toString() +
+        "\ntype: " +
+        type.toString();
+  }
 }
