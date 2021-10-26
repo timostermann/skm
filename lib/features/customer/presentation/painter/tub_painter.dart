@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:clock/clock.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skm_services/components/sketch_components/point.dart';
 import 'package:skm_services/enums/interaction_type.dart';
@@ -11,8 +10,6 @@ import 'package:touchable/touchable.dart';
 import 'base_sketch_painter.dart';
 
 class TubPainter extends BaseSketchPainter {
-  final Stopwatch tapClock = clock.stopwatch();
-
   TubPainter(context, template) : super(context, template);
 
   @override
@@ -47,21 +44,24 @@ class TubPainter extends BaseSketchPainter {
       center: constraints[1],
       onPanUpdate: (dragDetails) {
         context.read<SketchBloc>().add(
-              SketchUpdateProperties(SketchTemplate.copy(
-                template,
-                0,
-                dragDetails.localPosition.dx,
-              )),
+              SketchUpdateProperties(
+                SketchTemplate.copy(
+                  template,
+                  0,
+                  dragDetails.localPosition.dx,
+                ),
+              ),
             );
-        print("dragging");
       },
-      clock: tapClock,
-      onDoubleTap: (_) => context.read<SketchBloc>().add(
-            SketchToggleTextPopup(
-              template: template,
-              coordinateIndex: 0,
-            ),
-          ),
+      onTapDown: (tapDetails) {
+        context.read<SketchBloc>().add(
+              SketchToggleTextPopup(
+                template: template,
+                coordinateIndex: 0,
+                interactionType: InteractionType.horizontal,
+              ),
+            );
+      },
     );
 
     drawNode(
@@ -69,21 +69,24 @@ class TubPainter extends BaseSketchPainter {
       center: constraints[2],
       onPanUpdate: (dragDetails) {
         context.read<SketchBloc>().add(
-              SketchUpdateProperties(SketchTemplate.copy(
-                template,
-                2,
-                dragDetails.localPosition.dx,
-              )),
+              SketchUpdateProperties(
+                SketchTemplate.copy(
+                  template,
+                  2,
+                  dragDetails.localPosition.dx,
+                ),
+              ),
             );
-        print("dragging");
       },
-      clock: tapClock,
-      onDoubleTap: (_) => context.read<SketchBloc>().add(
-            SketchToggleTextPopup(
-              template: template,
-              coordinateIndex: 2,
-            ),
-          ),
+      onTapDown: (tapDetails) {
+        context.read<SketchBloc>().add(
+              SketchToggleTextPopup(
+                template: template,
+                coordinateIndex: 2,
+                interactionType: InteractionType.horizontal,
+              ),
+            );
+      },
     );
 
     drawNode(
@@ -91,21 +94,24 @@ class TubPainter extends BaseSketchPainter {
       center: constraints[3],
       onPanUpdate: (dragDetails) {
         context.read<SketchBloc>().add(
-              SketchUpdateProperties(SketchTemplate.copy(
-                template,
-                1,
-                dragDetails.localPosition.dy,
-              )),
+              SketchUpdateProperties(
+                SketchTemplate.copy(
+                  template,
+                  1,
+                  dragDetails.localPosition.dy,
+                ),
+              ),
             );
-        print("dragging");
       },
-      clock: tapClock,
-      onDoubleTap: (_) => context.read<SketchBloc>().add(
-            SketchToggleTextPopup(
-              template: template,
-              coordinateIndex: 1,
-            ),
-          ),
+      onTapDown: (tapDetails) {
+        context.read<SketchBloc>().add(
+              SketchToggleTextPopup(
+                template: template,
+                coordinateIndex: 1,
+                interactionType: InteractionType.vertical,
+              ),
+            );
+      },
     );
   }
 }

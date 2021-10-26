@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skm_services/features/customer/presentation/bloc/customer_bloc.dart';
 import 'dependencies.dart';
 import 'features/home.dart';
-import 'models/cache.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<CustomerBloc>(
-          create: (_) => CustomerBloc(get<Cache>()),
+          create: (_) => get<CustomerBloc>(),
         ),
       ],
       child: MaterialApp(

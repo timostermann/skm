@@ -11,14 +11,6 @@ class SketchLoaded extends SketchState {
   SketchLoaded({required template}) : super(template);
 }
 
-class SketchDragMode extends SketchState {
-  SketchDragMode({required template}) : super(template);
-}
-
-class SketchInputMode extends SketchState {
-  SketchInputMode({required template}) : super(template);
-}
-
 class SketchShowTextField extends SketchState {
   final int coordinateIndex;
 

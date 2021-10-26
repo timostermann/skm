@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:skm_services/enums/interaction_type.dart';
 import 'package:skm_services/enums/template_type.dart';
 import 'package:skm_services/models/cache.dart';
 import 'package:skm_services/models/sketch_template.dart';
@@ -29,14 +30,6 @@ class SketchBloc extends Bloc<SketchEvent, SketchState> {
       if (event is SketchToggleTextPopup) {
         emit(SketchShowTextField(
             template: event.template, coordinateIndex: event.coordinateIndex));
-      }
-
-      if (event is SketchToggleMode) {
-        if (event.enableInputMode) {
-          emit(SketchInputMode(template: event.template));
-        } else {
-          emit(SketchDragMode(template: event.template));
-        }
       }
     });
   }

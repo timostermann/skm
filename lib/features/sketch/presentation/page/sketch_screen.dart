@@ -7,6 +7,7 @@ import 'package:skm_services/features/customer/presentation/painter/alcove_paint
 import 'package:skm_services/features/customer/presentation/painter/corner_painter.dart';
 import 'package:skm_services/features/customer/presentation/painter/free_rect_painter.dart';
 import 'package:skm_services/features/customer/presentation/painter/tub_painter.dart';
+import 'package:skm_services/features/sketch/presentation/bloc/mode_bloc.dart';
 import 'package:skm_services/features/sketch/presentation/bloc/sketch_bloc.dart';
 import 'package:skm_services/models/sketch_template.dart';
 import 'package:skm_services/styles.dart';
@@ -26,8 +27,15 @@ class SketchScreenWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SketchBloc>(
-      create: (_) => get<SketchBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SketchBloc>(
+          create: (_) => get<SketchBloc>(),
+        ),
+        BlocProvider<ModeBloc>(
+          create: (_) => get<ModeBloc>(),
+        ),
+      ],
       child: SketchScreen(type: _type),
     );
   }
@@ -96,7 +104,8 @@ class _SketchScreenState extends State<SketchScreen> {
                   await showInputDialog(context, state);
                 }
               },
-              buildWhen: (previous, current) => (current is SketchLoaded),
+              buildWhen: (previous, current) =>
+                  (current is! SketchShowTextField),
               builder: (context, state) {
                 return Padding(
                   padding: const EdgeInsets.all(50.0),
@@ -150,9 +159,7 @@ class _SketchScreenState extends State<SketchScreen> {
             Positioned(
               left: 30.0,
               bottom: 50.0,
-              child: BlocBuilder<SketchBloc, SketchState>(
-                buildWhen: (previous, current) =>
-                    (current is SketchInputMode || current is SketchDragMode),
+              child: BlocBuilder<ModeBloc, ModeState>(
                 builder: (context, state) {
                   return SkButton(
                     child: Row(
@@ -160,9 +167,7 @@ class _SketchScreenState extends State<SketchScreen> {
                         Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: Icon(
-                            (state is SketchInputMode)
-                                ? Icons.keyboard
-                                : Icons.swipe,
+                            (state is InputMode) ? Icons.keyboard : Icons.swipe,
                             color: Colors.white,
                           ),
                         ),
@@ -173,9 +178,7 @@ class _SketchScreenState extends State<SketchScreen> {
                             ),
                             child: Text(
                               "Modus: " +
-                                  ((state is SketchInputMode)
-                                      ? "Eingabe"
-                                      : "Ziehen"),
+                                  ((state is InputMode) ? "Eingabe" : "Ziehen"),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 19,
@@ -187,12 +190,10 @@ class _SketchScreenState extends State<SketchScreen> {
                       ],
                     ),
                     onTap: () {
-                      if (state is SketchInputMode) {
-                        context.read<SketchBloc>().add(SketchToggleMode(
-                            enableInputMode: false, template: state.template));
+                      if (state is InputMode) {
+                        context.read<ModeBloc>().add(ToggleMode());
                       } else {
-                        context.read<SketchBloc>().add(SketchToggleMode(
-                            enableInputMode: true, template: state.template));
+                        context.read<ModeBloc>().add(ToggleMode());
                       }
                     },
                   );
