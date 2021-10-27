@@ -7,6 +7,7 @@ import 'package:skm_services/features/customer/presentation/painter/alcove_paint
 import 'package:skm_services/features/customer/presentation/painter/corner_painter.dart';
 import 'package:skm_services/features/customer/presentation/painter/free_rect_painter.dart';
 import 'package:skm_services/features/customer/presentation/painter/tub_painter.dart';
+import 'package:skm_services/features/document/presentation/page/document_screen.dart';
 import 'package:skm_services/features/sketch/presentation/bloc/mode_bloc.dart';
 import 'package:skm_services/features/sketch/presentation/bloc/sketch_bloc.dart';
 import 'package:skm_services/models/sketch_template.dart';
@@ -153,7 +154,14 @@ class _SketchScreenState extends State<SketchScreen> {
                     ),
                   ],
                 ),
-                onTap: () => {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return DocumentScreen();
+                    }),
+                  );
+                },
               ),
             ),
             Positioned(

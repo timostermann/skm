@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:skm_services/models/cache.dart';
 
 import 'features/customer/presentation/bloc/customer_bloc.dart';
+import 'features/document/presentation/bloc/document_bloc.dart';
 import 'features/sketch/presentation/bloc/mode_bloc.dart';
 import 'features/sketch/presentation/bloc/sketch_bloc.dart';
 
@@ -15,6 +16,7 @@ Future _registerBlocs() async {
   factory<SketchBloc>(() => SketchBloc(get<Cache>()));
   factory<ModeBloc>(() => ModeBloc());
   factory<CustomerBloc>(() => CustomerBloc(get<Cache>()));
+  factory<DocumentBloc>(() => DocumentBloc(get<Cache>()));
 }
 
 T get<T extends Object>({dynamic param}) {
