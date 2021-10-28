@@ -4,12 +4,15 @@ import 'package:skm_services/styles.dart';
 class SkButton extends StatelessWidget {
   final void Function() _onTap;
   final Widget _child;
+  final bool _onLightBackground;
 
-  SkButton({
-    required void Function() onTap,
-    required Widget child,
-  })  : _onTap = onTap,
-        _child = child;
+  SkButton(
+      {required void Function() onTap,
+      required Widget child,
+      bool onLightBackground = false})
+      : _onTap = onTap,
+        _child = child,
+        _onLightBackground = onLightBackground;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +24,17 @@ class SkButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(35)),
           gradient: LinearGradient(
-              colors: [
-                SkColors.main500,
-                SkColors.main400,
-                SkColors.main300,
-              ],
+              colors: _onLightBackground
+                  ? [
+                      SkColors.main700,
+                      SkColors.main600,
+                      SkColors.main500,
+                    ]
+                  : [
+                      SkColors.main500,
+                      SkColors.main400,
+                      SkColors.main300,
+                    ],
               begin: Alignment.center,
               end: Alignment.topRight,
               stops: [0, 0.7, 1]),

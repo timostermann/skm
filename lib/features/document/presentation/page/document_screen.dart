@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:skm_services/components/sk_button.dart';
 import 'package:skm_services/features/document/pdf.dart';
 import 'package:skm_services/features/document/presentation/bloc/document_bloc.dart';
@@ -77,24 +77,43 @@ class _DocumentScreenState extends State<DocumentScreen> {
                 ),
                 SkButton(
                   onTap: () async {
-                    final params = OpenFileDialogParams(
-                      dialogType: OpenFileDialogType.image,
-                      sourceType: SourceType.photoLibrary,
-                      allowEditing: true,
-                    );
-                    final filePath =
-                        await FlutterFileDialog.pickFile(params: params);
-                    if (filePath == null) return;
-                    if (state is DocumentsUploaded) {
-                      context.read<DocumentBloc>().add(UpdateDocumentsEvent(
-                          files: [...state.files, File(filePath)]));
-                    } else {
-                      context
-                          .read<DocumentBloc>()
-                          .add(UpdateDocumentsEvent(files: [File(filePath)]));
+                    final picker = ImagePicker();
+                    final XFile? image = await picker.pickImage(
+                        source: ImageSource.gallery, imageQuality: 20);
+                    if (image != null) {
+                      final File file = File(image.path);
+                      if (state is DocumentsUploaded) {
+                        context.read<DocumentBloc>().add(UpdateDocumentsEvent(
+                            files: [...state.files, file]));
+                        print(state.files.length);
+                      } else {
+                        context
+                            .read<DocumentBloc>()
+                            .add(UpdateDocumentsEvent(files: [file]));
+                      }
                     }
                   },
                   child: Text("Bilder"),
+                ),
+                SkButton(
+                  onTap: () async {
+                    final picker = ImagePicker();
+                    final XFile? image = await picker.pickImage(
+                        source: ImageSource.camera, imageQuality: 20);
+                    if (image != null) {
+                      final File file = File(image.path);
+                      if (state is DocumentsUploaded) {
+                        context.read<DocumentBloc>().add(UpdateDocumentsEvent(
+                            files: [...state.files, file]));
+                        print(state.files.length);
+                      } else {
+                        context
+                            .read<DocumentBloc>()
+                            .add(UpdateDocumentsEvent(files: [file]));
+                      }
+                    }
+                  },
+                  child: Text("Bilder aus Kamera"),
                 ),
               ],
             ),

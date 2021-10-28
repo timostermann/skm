@@ -41,5 +41,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The App uses the PhotoLibrary to add images to the measurement pdf.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>The App uses the Camera to add images to the measurement pdf.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>The App actually doesn't use the microphone. It may need this key to use the image_picker library of flutter.</string>
 </dict>
 </plist>

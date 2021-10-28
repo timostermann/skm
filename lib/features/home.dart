@@ -55,11 +55,15 @@ class _HomeState extends State<Home> {
                       height: isTablet(context) ? 130 : 160,
                     ),
                     SkButton(
-                      child: Text(
-                        "Start",
-                        style: TextStyle(color: Colors.white, fontSize: 28),
-                        textAlign: TextAlign.center,
-                      ),
+                      child: Stack(children: [
+                        Center(
+                          child: Text(
+                            "Start",
+                            style: TextStyle(color: Colors.white, fontSize: 28),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ]),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {

@@ -154,6 +154,7 @@ class _SketchScreenState extends State<SketchScreen> {
                     ),
                   ],
                 ),
+                onLightBackground: true,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -197,6 +198,7 @@ class _SketchScreenState extends State<SketchScreen> {
                         ),
                       ],
                     ),
+                    onLightBackground: true,
                     onTap: () {
                       if (state is InputMode) {
                         context.read<ModeBloc>().add(ToggleMode());

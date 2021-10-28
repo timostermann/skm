@@ -67,11 +67,24 @@ class _ScenarioScreenState extends State<ScenarioScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                        bottom: 40,
+                        bottom: 10,
                         left: 12,
                       ),
                       child: Text(
                         "Bitte wählen Sie eine passende Einbausituation.",
+                        style: TextStyle(
+                          color: SkColors.main300,
+                          fontSize: isTablet(context) ? 16 : 20,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 40,
+                        left: 12,
+                      ),
+                      child: Text(
+                        "Passen Sie anschließend die Skizze nach Ihren Wünschen an.",
                         style: TextStyle(
                           color: SkColors.main300,
                           fontSize: isTablet(context) ? 16 : 20,
