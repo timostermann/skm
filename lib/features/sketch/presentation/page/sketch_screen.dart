@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skm_services/components/sk_button.dart';
+import 'package:skm_services/components/sk_text_field.dart';
+import 'package:skm_services/enums/interaction_type.dart';
 import 'package:skm_services/enums/template_type.dart';
 import 'package:skm_services/features/customer/presentation/painter/alcove_painter.dart';
 import 'package:skm_services/features/customer/presentation/painter/corner_painter.dart';
@@ -222,8 +224,11 @@ class _SketchScreenState extends State<SketchScreen> {
       context: context,
       builder: (_) {
         return AlertDialog(
-          title: Text("My Super title"),
-          content: TextField(controller: _controller),
+          title: Text("Passe die Länge der Linie an."),
+          content: TextField(
+            controller: _controller,
+            decoration: SkTextField.getStyle(null, false, false),
+          ),
           actions: [
             TextButton(
                 child: Text('Bestätigen'),

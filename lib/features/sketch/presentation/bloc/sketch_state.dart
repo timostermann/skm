@@ -13,7 +13,11 @@ class SketchLoaded extends SketchState {
 
 class SketchShowTextField extends SketchState {
   final int coordinateIndex;
+  final InteractionType interactionType;
 
-  SketchShowTextField({required template, required this.coordinateIndex})
-      : super(template);
+  SketchShowTextField({
+    required template,
+    required this.coordinateIndex,
+    required this.interactionType,
+  }) : super(template);
 }

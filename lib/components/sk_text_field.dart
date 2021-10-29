@@ -30,66 +30,69 @@ class SkTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
-      name: _name,
-      cursorColor: SkColors.main500,
-      style: TextStyle(
-        color: SkColors.main300,
-        fontSize: 20.0,
-      ),
-      initialValue: _initialValue,
-      textInputAction: _last ? TextInputAction.done : TextInputAction.next,
-      keyboardType: _keyboardType,
-      validator: _optional
-          ? _validator
-          : _validator ??
-              (value) {
-                if ((value?.length ?? 0) == 0) {
-                  // return "Bitte fülle dieses Feld aus.";
+        name: _name,
+        cursorColor: SkColors.main500,
+        style: TextStyle(
+          color: SkColors.main300,
+          fontSize: 20.0,
+        ),
+        initialValue: _initialValue,
+        textInputAction: _last ? TextInputAction.done : TextInputAction.next,
+        keyboardType: _keyboardType,
+        validator: _optional
+            ? _validator
+            : _validator ??
+                (value) {
+                  if ((value?.length ?? 0) == 0) {
+                    // return "Bitte fülle dieses Feld aus.";
+                    return null;
+                  }
                   return null;
-                }
-                return null;
-              },
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: SkColors.main700,
-        labelStyle: TextStyle(
+                },
+        decoration: getStyle(_label, _optional, true));
+  }
+
+  static InputDecoration getStyle(String? label, bool optional, bool filled) {
+    return InputDecoration(
+      filled: filled,
+      fillColor: SkColors.main700,
+      labelStyle: TextStyle(
+        color: SkColors.main500,
+      ),
+      labelText: label,
+      border: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          const Radius.circular(10.0),
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          const Radius.circular(10.0),
+        ),
+        borderSide: BorderSide(
+          color: SkColors.accent400,
+          width: 1.0,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          const Radius.circular(10.0),
+        ),
+        borderSide: const BorderSide(
           color: SkColors.main500,
+          width: 1.0,
         ),
-        labelText: _label,
-        border: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(
-            const Radius.circular(10.0),
-          ),
+      ),
+      suffixIcon: Text(
+        optional ? "optional" : "",
+        style: TextStyle(
+          color: SkColors.accent400,
+          fontSize: 16.0,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(
-            const Radius.circular(10.0),
-          ),
-          borderSide: BorderSide(
-            color: SkColors.accent400,
-            width: 1.0,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(
-            const Radius.circular(10.0),
-          ),
-          borderSide: const BorderSide(
-            color: SkColors.main500,
-            width: 1.0,
-          ),
-        ),
-        suffixIcon: Text(
-          _optional ? "optional" : "",
-          style: TextStyle(
-            color: SkColors.accent400,
-            fontSize: 16.0,
-          ),
-        ),
-        suffixIconConstraints: BoxConstraints(
-          minWidth: 75,
-          minHeight: 0,
-        ),
+      ),
+      suffixIconConstraints: BoxConstraints(
+        minWidth: 75,
+        minHeight: 0,
       ),
     );
   }

@@ -29,7 +29,10 @@ class SketchBloc extends Bloc<SketchEvent, SketchState> {
 
       if (event is SketchToggleTextPopup) {
         emit(SketchShowTextField(
-            template: event.template, coordinateIndex: event.coordinateIndex));
+          template: event.template,
+          coordinateIndex: event.coordinateIndex,
+          interactionType: event.interactionType,
+        ));
       }
     });
   }
