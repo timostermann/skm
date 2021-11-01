@@ -5,16 +5,16 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart';
 
 class Pdf {
-  static Future<File> generatePDF(Widget widget) async {
+  static Future<File> generatePDF(List<Widget> widgets, String name) async {
     final pdf = Document();
 
-    pdf.addPage(Page(
-      build: (context) => Center(
-        child: widget,
+    pdf.addPage(
+      MultiPage(
+        build: (context) => widgets,
       ),
-    ));
+    );
 
-    return saveDocument(name: 'my_example.pdf', pdf: pdf);
+    return saveDocument(name: '$name.pdf', pdf: pdf);
   }
 
   static Future<File> saveDocument({

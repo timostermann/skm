@@ -1,3 +1,7 @@
+
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -33,6 +37,10 @@ class SketchBloc extends Bloc<SketchEvent, SketchState> {
           coordinateIndex: event.coordinateIndex,
           interactionType: event.interactionType,
         ));
+      }
+
+      if (event is SketchScreenshot) {
+        cache.screenshot = event.screenshot;
       }
     });
   }

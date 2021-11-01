@@ -1,9 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:skm_services/components/sk_button.dart';
 import 'package:skm_services/components/sk_text_field.dart';
-import 'package:skm_services/enums/interaction_type.dart';
 import 'package:skm_services/enums/template_type.dart';
 import 'package:skm_services/features/customer/presentation/painter/alcove_painter.dart';
 import 'package:skm_services/features/customer/presentation/painter/corner_painter.dart';
@@ -24,7 +27,7 @@ class SketchScreenWrapper extends StatelessWidget {
 
   const SketchScreenWrapper({
     Key? key,
-    required type,
+    required TemplateType type,
   })  : _type = type,
         super(key: key);
 
@@ -69,7 +72,8 @@ class _SketchScreenState extends State<SketchScreen> {
     super.initState();
   }
 
-  TextEditingController _controller = TextEditingController();
+  TextEditingController _textController = TextEditingController();
+  ScreenshotController _screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {
@@ -110,15 +114,18 @@ class _SketchScreenState extends State<SketchScreen> {
               buildWhen: (previous, current) =>
                   (current is! SketchShowTextField),
               builder: (context, state) {
-                return Padding(
-                  padding: const EdgeInsets.all(50.0),
-                  child: SizedBox.expand(
-                    child: AnimatedContainer(
-                      color: Colors.transparent,
-                      duration: Duration(seconds: 1),
-                      child: CanvasTouchDetector(
-                        builder: (context) => CustomPaint(
-                          painter: getPainter(_type, context, state.template),
+                return Screenshot(
+                  controller: _screenshotController,
+                  child: Padding(
+                    padding: const EdgeInsets.all(50.0),
+                    child: SizedBox.expand(
+                      child: AnimatedContainer(
+                        color: Colors.transparent,
+                        duration: Duration(seconds: 1),
+                        child: CanvasTouchDetector(
+                          builder: (context) => CustomPaint(
+                            painter: getPainter(_type, context, state.template),
+                          ),
                         ),
                       ),
                     ),
@@ -129,40 +136,53 @@ class _SketchScreenState extends State<SketchScreen> {
             Positioned(
               right: 30.0,
               bottom: 50.0,
-              child: SkButton(
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: SvgPicture.asset(
-                        "assets/icons/tick.svg",
-                        width: 40,
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          right: 40,
-                        ),
-                        child: Text(
-                          "Weiter",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
+              child: BlocBuilder<SketchBloc, SketchState>(
+                builder: (context, state) {
+                  return SkButton(
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: SvgPicture.asset(
+                            "assets/icons/tick.svg",
+                            width: 40,
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              right: 40,
+                            ),
+                            child: Text(
+                              "Weiter",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                onLightBackground: true,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return DocumentScreen();
-                    }),
+                    onLightBackground: true,
+                    onTap: () async {
+                      Uint8List? screenshotData =
+                          await _screenshotController.capture();
+                      if (screenshotData != null) {
+                        context
+                            .read<SketchBloc>()
+                            .add(SketchScreenshot(screenshot: screenshotData));
+                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return DocumentScreen(
+                              painter:
+                                  getPainter(_type, context, state.template));
+                        }),
+                      );
+                    },
                   );
                 },
               ),
@@ -226,7 +246,7 @@ class _SketchScreenState extends State<SketchScreen> {
         return AlertDialog(
           title: Text("Passe die Länge der Linie an."),
           content: TextField(
-            controller: _controller,
+            controller: _textController,
             decoration: SkTextField.getStyle(null, false, false),
           ),
           actions: [
@@ -238,7 +258,7 @@ class _SketchScreenState extends State<SketchScreen> {
                           SketchTemplate.copy(
                             state.template,
                             state.coordinateIndex,
-                            double.tryParse(_controller.value.text) ??
+                            double.tryParse(_textController.value.text) ??
                                 state.template.interactiveCoordinates[
                                     state.coordinateIndex],
                           ),

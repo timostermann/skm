@@ -8,3 +8,6 @@ class UpdateDocumentsEvent extends DocumentEvent {
 
   UpdateDocumentsEvent({required this.files});
 }
+
+class ToggleLoadingEvent extends DocumentEvent {
+}

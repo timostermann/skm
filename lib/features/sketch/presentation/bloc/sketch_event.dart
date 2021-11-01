@@ -23,3 +23,9 @@ class SketchToggleTextPopup extends SketchEvent {
       required this.coordinateIndex,
       required this.interactionType});
 }
+
+class SketchScreenshot extends SketchEvent {
+  final Uint8List? screenshot;
+
+  SketchScreenshot({required this.screenshot});
+}
