@@ -19,25 +19,54 @@ class AlcovePainter extends BaseSketchPainter {
     List<Point> constraints = [
       Point(0, 0),
       Point.interactable(
-        offset: Offset(template.interactiveCoordinates[0], 0),
+        offset: Offset(0, template.interactiveCoordinates[0]),
+        interactionType: InteractionType.vertical,
+      ),
+      Point(100, template.interactiveCoordinates[0]),
+      Point.interactable(
+        offset: Offset(100 + template.interactiveCoordinates[5],
+            template.interactiveCoordinates[0]),
         interactionType: InteractionType.horizontal,
       ),
+      Point(200 + template.interactiveCoordinates[5],
+          template.interactiveCoordinates[0]),
       Point.interactable(
-        offset: Offset(template.interactiveCoordinates[2],
-            template.interactiveCoordinates[1]),
+        offset: Offset(
+            200 + template.interactiveCoordinates[5],
+            template.interactiveCoordinates[0] -
+                template.interactiveCoordinates[4]),
+        interactionType: InteractionType.vertical,
+      ),
+      Point.interactable(
+        offset: Offset(
+            100 +
+                template.interactiveCoordinates[5] +
+                template.interactiveCoordinates[3],
+            template.interactiveCoordinates[0] -
+                template.interactiveCoordinates[4]),
         interactionType: InteractionType.angle,
       ),
       Point.interactable(
-        offset: Offset(template.interactiveCoordinates[0],
-            template.interactiveCoordinates[1]),
-        interactionType: InteractionType.vertical,
+        offset: Offset(100 + template.interactiveCoordinates[2], 0),
+        interactionType: InteractionType.angle,
+      ),
+      Point.interactable(
+        offset: Offset(100 + template.interactiveCoordinates[1], 0),
+        interactionType: InteractionType.angle,
       ),
     ];
 
     drawLine(touchyCanvas, constraints[0], constraints[1]);
-    drawLine(touchyCanvas, constraints[0], constraints[2]);
-    drawLine(touchyCanvas, constraints[1], constraints[3]);
+    drawLine(touchyCanvas, constraints[1], constraints[2]);
     drawLine(touchyCanvas, constraints[2], constraints[3]);
+    drawLine(touchyCanvas, constraints[3], constraints[4]);
+    drawLine(touchyCanvas, constraints[4], constraints[5]);
+    drawLine(touchyCanvas, constraints[5], constraints[6]);
+    drawLine(touchyCanvas, constraints[6], constraints[7]);
+    drawLine(touchyCanvas, constraints[7], constraints[8]);
+    drawLine(touchyCanvas, constraints[8], constraints[0]);
+    drawLine(touchyCanvas, constraints[2], constraints[8]);
+    drawLine(touchyCanvas, constraints[3], constraints[6]);
 
     drawNode(
       canvas: touchyCanvas,
@@ -48,7 +77,7 @@ class AlcovePainter extends BaseSketchPainter {
                 SketchTemplate.copy(
                   template,
                   0,
-                  dragDetails.localPosition.dx,
+                  dragDetails.localPosition.dy,
                 ),
               ),
             );
@@ -58,32 +87,7 @@ class AlcovePainter extends BaseSketchPainter {
               SketchToggleTextPopup(
                 template: template,
                 coordinateIndex: 0,
-                interactionType: InteractionType.horizontal,
-              ),
-            );
-      },
-    );
-
-    drawNode(
-      canvas: touchyCanvas,
-      center: constraints[2],
-      onPanUpdate: (dragDetails) {
-        context.read<SketchBloc>().add(
-              SketchUpdateProperties(
-                SketchTemplate.copy(
-                  template,
-                  2,
-                  dragDetails.localPosition.dx,
-                ),
-              ),
-            );
-      },
-      onTapDown: (tapDetails) {
-        context.read<SketchBloc>().add(
-              SketchToggleTextPopup(
-                template: template,
-                coordinateIndex: 2,
-                interactionType: InteractionType.horizontal,
+                interactionType: InteractionType.vertical,
               ),
             );
       },
@@ -97,8 +101,111 @@ class AlcovePainter extends BaseSketchPainter {
               SketchUpdateProperties(
                 SketchTemplate.copy(
                   template,
+                  5,
+                  dragDetails.localPosition.dx - 100,
+                ),
+              ),
+            );
+      },
+      onTapDown: (tapDetails) {
+        context.read<SketchBloc>().add(
+              SketchToggleTextPopup(
+                template: template,
+                coordinateIndex: 5,
+                interactionType: InteractionType.horizontal,
+              ),
+            );
+      },
+    );
+
+    drawNode(
+      canvas: touchyCanvas,
+      center: constraints[5],
+      onPanUpdate: (dragDetails) {
+        context.read<SketchBloc>().add(
+              SketchUpdateProperties(
+                SketchTemplate.copy(
+                  template,
+                  4,
+                  template.interactiveCoordinates[0] -
+                      dragDetails.localPosition.dy,
+                ),
+              ),
+            );
+      },
+      onTapDown: (tapDetails) {
+        context.read<SketchBloc>().add(
+              SketchToggleTextPopup(
+                template: template,
+                coordinateIndex: 4,
+                interactionType: InteractionType.vertical,
+              ),
+            );
+      },
+    );
+
+    drawNode(
+      canvas: touchyCanvas,
+      center: constraints[6],
+      onPanUpdate: (dragDetails) {
+        context.read<SketchBloc>().add(
+              SketchUpdateProperties(
+                SketchTemplate.copy(
+                  template,
+                  3,
+                  dragDetails.localPosition.dx -
+                      100 -
+                      template.interactiveCoordinates[5],
+                ),
+              ),
+            );
+      },
+      onTapDown: (tapDetails) {
+        context.read<SketchBloc>().add(
+              SketchToggleTextPopup(
+                template: template,
+                coordinateIndex: 3,
+                interactionType: InteractionType.angle,
+              ),
+            );
+      },
+    );
+
+    drawNode(
+      canvas: touchyCanvas,
+      center: constraints[7],
+      onPanUpdate: (dragDetails) {
+        context.read<SketchBloc>().add(
+              SketchUpdateProperties(
+                SketchTemplate.copy(
+                  template,
+                  2,
+                  dragDetails.localPosition.dx - 100,
+                ),
+              ),
+            );
+      },
+      onTapDown: (tapDetails) {
+        context.read<SketchBloc>().add(
+              SketchToggleTextPopup(
+                template: template,
+                coordinateIndex: 2,
+                interactionType: InteractionType.angle,
+              ),
+            );
+      },
+    );
+
+    drawNode(
+      canvas: touchyCanvas,
+      center: constraints[8],
+      onPanUpdate: (dragDetails) {
+        context.read<SketchBloc>().add(
+              SketchUpdateProperties(
+                SketchTemplate.copy(
+                  template,
                   1,
-                  dragDetails.localPosition.dy,
+                  dragDetails.localPosition.dx - 100,
                 ),
               ),
             );
@@ -108,7 +215,7 @@ class AlcovePainter extends BaseSketchPainter {
               SketchToggleTextPopup(
                 template: template,
                 coordinateIndex: 1,
-                interactionType: InteractionType.vertical,
+                interactionType: InteractionType.angle,
               ),
             );
       },

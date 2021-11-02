@@ -7,7 +7,7 @@ extension TemplateTypeMappings on TemplateType {
     TemplateType.Corner: [300, 500, 0],
     TemplateType.Free: [5, 500, 200],
     TemplateType.Tub: [400, 400, 50],
-    TemplateType.Alcove: [500, 100, 300],
+    TemplateType.Alcove: [800, 0, 200, 0, 600, 500],
   };
 
   Coordinates get coordinates => defaultCoordinates[this] ?? [];
