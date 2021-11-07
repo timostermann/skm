@@ -1,0 +1,48 @@
+name: skm_services
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.14.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_form_builder: ^6.0.1
+  flutter_svg: 
+  flutter_bloc: 
+  bloc: 
+  svg_path_parser: ^1.1.1
+  touchable: ^1.0.0
+  get_it:
+  clock: ^1.1.0
+  pdf: ^3.6.1
+  path_provider: ^2.0.5
+  open_file: ^3.2.1
+  flutter_file_dialog: ^2.3.0
+  multi_image_picker2: ^5.0.02
+  image_picker: ^0.8.4+3
+  screenshot: ^1.2.3
+
+
+cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  bloc_test: 
+
+flutter:
+
+  uses-material-design: true
+
+  assets: 
+    - assets/images/
+    - assets/icons/
+
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
