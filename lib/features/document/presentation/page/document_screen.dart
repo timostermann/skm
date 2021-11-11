@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skm_services/components/sk_button.dart';
@@ -23,6 +24,7 @@ class DocumentScreen extends StatefulWidget {
 class _DocumentScreenState extends State<DocumentScreen> {
   final picker = ImagePicker();
   final CustomPainter? painter;
+  bool pdfCreated = false;
 
   _DocumentScreenState({required this.painter});
 
@@ -285,174 +287,215 @@ class _DocumentScreenState extends State<DocumentScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              SkButton(
-                                onTap: () async {
-                                  final pdfFile = await Pdf.generatePDF(
-                                      [
-                                        pdfWidgets.Column(
-                                          children: [
-                                            pdfWidgets.Padding(
-                                              padding: const pdfWidgets
-                                                  .EdgeInsets.only(bottom: 24),
-                                              child: pdfWidgets.Row(
-                                                children: [
-                                                  pdfWidgets.Text(
-                                                    "Kundendaten",
-                                                    style: pdfWidgets.TextStyle(
-                                                      fontSize: 20,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            pdfWidgets.Row(children: [
-                                              pdfWidgets.Text("Vorname: "),
-                                              pdfWidgets.Text(getCustomerValue(
-                                                  state.cache.customer
-                                                      .firstName)),
-                                            ]),
-                                            pdfWidgets.Row(children: [
-                                              pdfWidgets.Text("Nachname: "),
-                                              pdfWidgets.Text(getCustomerValue(
-                                                  state.cache.customer
-                                                      .firstName)),
-                                            ]),
-                                            pdfWidgets.Row(children: [
-                                              pdfWidgets.Text(
-                                                  "Straße & Hausnummer: "),
-                                              pdfWidgets.Text(getCustomerValue(
-                                                  state.cache.customer
-                                                      .firstName)),
-                                            ]),
-                                            pdfWidgets.Row(children: [
-                                              pdfWidgets.Text("PLZ: "),
-                                              pdfWidgets.Text(getCustomerValue(
-                                                  state.cache.customer
-                                                      .firstName)),
-                                            ]),
-                                            pdfWidgets.Row(children: [
-                                              pdfWidgets.Text("Ort: "),
-                                              pdfWidgets.Text(getCustomerValue(
-                                                  state.cache.customer
-                                                      .firstName)),
-                                            ]),
-                                            pdfWidgets.Row(children: [
-                                              pdfWidgets.Text(
-                                                  "Telefonnummer: "),
-                                              pdfWidgets.Text(getCustomerValue(
-                                                  state.cache.customer
-                                                      .firstName)),
-                                            ]),
-                                            pdfWidgets.Row(children: [
-                                              pdfWidgets.Text("E-Mail: "),
-                                              pdfWidgets.Text(getCustomerValue(
-                                                  state.cache.customer
-                                                      .firstName)),
-                                            ]),
-                                            pdfWidgets.Row(children: [
-                                              pdfWidgets.Text("Kundenummer: "),
-                                              pdfWidgets.Text(getCustomerValue(
-                                                  state.cache.customer
-                                                      .firstName)),
-                                            ]),
-                                            pdfWidgets.Padding(
-                                              padding: const pdfWidgets
-                                                      .EdgeInsets.symmetric(
-                                                  vertical: 24),
-                                              child: pdfWidgets.Row(
-                                                children: [
-                                                  pdfWidgets.Text(
-                                                    "Bilder",
-                                                    style: pdfWidgets.TextStyle(
-                                                      fontSize: 20,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            pdfWidgets.Wrap(
-                                                alignment: pdfWidgets
-                                                    .WrapAlignment.spaceEvenly,
-                                                children: state.cache.files
-                                                    .map(
-                                                      (file) =>
-                                                          pdfWidgets.Container(
-                                                        child: pdfWidgets.Image(
-                                                            pdfWidgets
-                                                                .MemoryImage(file
-                                                                    .readAsBytesSync())),
-                                                        padding: const pdfWidgets
-                                                            .EdgeInsets.all(8),
-                                                        height: 250,
-                                                        width: 200,
-                                                        decoration: pdfWidgets
-                                                            .BoxDecoration(
-                                                          borderRadius: pdfWidgets
-                                                                  .BorderRadius
-                                                              .circular(5.0),
-                                                        ),
+                              Column(
+                                children: [
+                                  SkButton(
+                                  onTap: () async {
+                                    final pdfFile = await Pdf.generatePDF(
+                                        [
+                                          pdfWidgets.Column(
+                                            children: [
+                                              pdfWidgets.Padding(
+                                                padding: const pdfWidgets
+                                                    .EdgeInsets.only(bottom: 24),
+                                                child: pdfWidgets.Row(
+                                                  children: [
+                                                    pdfWidgets.Text(
+                                                      "Kundendaten",
+                                                      style: pdfWidgets.TextStyle(
+                                                        fontSize: 20,
                                                       ),
                                                     )
-                                                    .toList()
-                                                    .cast<pdfWidgets.Widget>()),
-                                            pdfWidgets.Padding(
-                                              padding: const pdfWidgets
-                                                      .EdgeInsets.symmetric(
-                                                  vertical: 24),
-                                              child: pdfWidgets.Row(
-                                                children: [
-                                                  pdfWidgets.Text(
-                                                    "Skizze",
-                                                    style: pdfWidgets.TextStyle(
-                                                      fontSize: 20,
-                                                    ),
-                                                  )
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            pdfWidgets.Image(
-                                                pdfWidgets.MemoryImage(
-                                                    state.cache.screenshot!),
-                                                height: 500),
-                                          ],
-                                        )
-                                      ],
-                                      (state.cache.customer.firstName ??
-                                              "vorname") +
-                                          "_" +
-                                          (state.cache.customer.lastName ??
-                                              "nachname") +
-                                          "_" +
-                                          (state.cache.customer.id ?? "id"));
-
-                                  Pdf.openFile(pdfFile);
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 20),
-                                      child: Icon(
-                                        Icons.picture_as_pdf,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          right: 10,
+                                              pdfWidgets.Row(children: [
+                                                pdfWidgets.Text("Vorname: "),
+                                                pdfWidgets.Text(getCustomerValue(
+                                                    state.cache.customer
+                                                        .firstName)),
+                                              ]),
+                                              pdfWidgets.Row(children: [
+                                                pdfWidgets.Text("Nachname: "),
+                                                pdfWidgets.Text(getCustomerValue(
+                                                    state.cache.customer
+                                                        .firstName)),
+                                              ]),
+                                              pdfWidgets.Row(children: [
+                                                pdfWidgets.Text(
+                                                    "Straße & Hausnummer: "),
+                                                pdfWidgets.Text(getCustomerValue(
+                                                    state.cache.customer
+                                                        .firstName)),
+                                              ]),
+                                              pdfWidgets.Row(children: [
+                                                pdfWidgets.Text("PLZ: "),
+                                                pdfWidgets.Text(getCustomerValue(
+                                                    state.cache.customer
+                                                        .firstName)),
+                                              ]),
+                                              pdfWidgets.Row(children: [
+                                                pdfWidgets.Text("Ort: "),
+                                                pdfWidgets.Text(getCustomerValue(
+                                                    state.cache.customer
+                                                        .firstName)),
+                                              ]),
+                                              pdfWidgets.Row(children: [
+                                                pdfWidgets.Text(
+                                                    "Telefonnummer: "),
+                                                pdfWidgets.Text(getCustomerValue(
+                                                    state.cache.customer
+                                                        .firstName)),
+                                              ]),
+                                              pdfWidgets.Row(children: [
+                                                pdfWidgets.Text("E-Mail: "),
+                                                pdfWidgets.Text(getCustomerValue(
+                                                    state.cache.customer
+                                                        .firstName)),
+                                              ]),
+                                              pdfWidgets.Row(children: [
+                                                pdfWidgets.Text("Kundenummer: "),
+                                                pdfWidgets.Text(getCustomerValue(
+                                                    state.cache.customer
+                                                        .firstName)),
+                                              ]),
+                                              pdfWidgets.Padding(
+                                                padding: const pdfWidgets
+                                                        .EdgeInsets.symmetric(
+                                                    vertical: 24),
+                                                child: pdfWidgets.Row(
+                                                  children: [
+                                                    pdfWidgets.Text(
+                                                      "Bilder",
+                                                      style: pdfWidgets.TextStyle(
+                                                        fontSize: 20,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              pdfWidgets.Wrap(
+                                                  alignment: pdfWidgets
+                                                      .WrapAlignment.spaceEvenly,
+                                                  children: state.cache.files
+                                                      .map(
+                                                        (file) =>
+                                                            pdfWidgets.Container(
+                                                          child: pdfWidgets.Image(
+                                                              pdfWidgets
+                                                                  .MemoryImage(file
+                                                                      .readAsBytesSync())),
+                                                          padding: const pdfWidgets
+                                                              .EdgeInsets.all(8),
+                                                          height: 250,
+                                                          width: 200,
+                                                          decoration: pdfWidgets
+                                                              .BoxDecoration(
+                                                            borderRadius: pdfWidgets
+                                                                    .BorderRadius
+                                                                .circular(5.0),
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .toList()
+                                                      .cast<pdfWidgets.Widget>()),
+                                              pdfWidgets.Padding(
+                                                padding: const pdfWidgets
+                                                        .EdgeInsets.symmetric(
+                                                    vertical: 24),
+                                                child: pdfWidgets.Row(
+                                                  children: [
+                                                    pdfWidgets.Text(
+                                                      "Skizze",
+                                                      style: pdfWidgets.TextStyle(
+                                                        fontSize: 20,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              pdfWidgets.Image(
+                                                  pdfWidgets.MemoryImage(
+                                                      state.cache.screenshot!),
+                                                  height: 500),
+                                            ],
+                                          )
+                                        ],
+                                        (state.cache.customer.firstName ??
+                                                "vorname") +
+                                            "_" +
+                                            (state.cache.customer.lastName ??
+                                                "nachname") +
+                                            "_" +
+                                            (state.cache.customer.id ?? "id"));
+                              
+                                    Pdf.openFile(pdfFile);
+                                    setState(() {
+                                      pdfCreated = true;
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 20),
+                                        child: Icon(
+                                          Icons.picture_as_pdf,
+                                          color: Colors.white,
                                         ),
-                                        child: Text(
-                                          "PDF-Export",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 22,
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            right: 10,
                                           ),
-                                          textAlign: TextAlign.center,
+                                          child: Text(
+                                            "PDF-Export",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 22,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
+                                pdfCreated ? Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 18.0),
+                                  child: SkButton(
+                                    onTap: () {
+                                      Phoenix.rebirth(context);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 20),
+                                          child: Icon(
+                                            Icons.cached,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 10,
+                                            ),
+                                            child: Text(
+                                              "Neu starten",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 22,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ) : Container(),
+                                ],
                               ),
                             ],
                           ),
