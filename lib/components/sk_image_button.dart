@@ -20,7 +20,6 @@ class SkImageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("$_text clicked!");
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {

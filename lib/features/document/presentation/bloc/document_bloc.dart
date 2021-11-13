@@ -16,8 +16,12 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
             : DocumentsUploaded(files: cache.files, cache: cache)) {
     on<DocumentEvent>((event, emit) {
       if (event is UpdateDocumentsEvent) {
-        cache.files = event.files;
-        emit(DocumentsUploaded(files: event.files, cache: cache));
+        if (event.files.isEmpty) {
+          emit(NoDocumentsUploaded(cache: cache));
+        } else {
+          cache.files = event.files;
+          emit(DocumentsUploaded(files: event.files, cache: cache));
+        }
       }
 
       if (event is ToggleLoadingEvent) {
