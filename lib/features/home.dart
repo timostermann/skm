@@ -64,12 +64,9 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ]),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return CustomerScreen();
-                        }),
-                      ),
+                      onTap: () {
+                        routeToCustomerScreen(context);
+                      },
                     ),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,6 +77,15 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+    );
+  }
+
+  void routeToCustomerScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return CustomerScreen();
+      }),
     );
   }
 }

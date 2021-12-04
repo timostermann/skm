@@ -25,33 +25,18 @@ double roundToNthDecimal(double number, int n) {
 double getBetaAngle(num aLength, num bLength, [int? decimals]) {
   return decimals != null
       ? roundToNthDecimal(
-          arcToSquareMeasure(math.atan(aLength / bLength)), decimals)
-      : arcToSquareMeasure(math.atan(aLength / bLength));
+          radianToAngleMeasure(math.atan(aLength / bLength)), decimals)
+      : radianToAngleMeasure(math.atan(aLength / bLength));
 }
 
-double arcToSquareMeasure(double arc) {
-  return arc * (180.0 / math.pi);
+double radianToAngleMeasure(double angle) {
+  return angle * (180.0 / math.pi);
 }
 
-double squareToArcMeasure(double square) {
-  return square * (math.pi / 180);
+double angleToRadianMeasure(double radian) {
+  return radian * (math.pi / 180);
 }
 
-// de: Sinussatz
-double lawOfSines(double alpha, double aLength, double beta) {
-  return (aLength / math.sin(alpha)) * math.sin(beta);
-}
-
-// de: Kosinussatz
-double lawOfCosines(double aLength, double bLength, [double? gamma]) {
-  print("a: " + aLength.toString());
-  print("b: " + bLength.toString());
-  return math.sqrt(math.pow(aLength, 2) +
-      math.pow(bLength, 2) -
-      2 * aLength * bLength * math.cos(squareToArcMeasure(gamma ?? 90.0)));
-}
-
-// de: Winkelsummensatz
 double getAngleByAngleSum(double alpha, double beta) {
   return 180.0 - alpha - beta;
 }

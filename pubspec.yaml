@@ -16,15 +16,14 @@ dependencies:
   svg_path_parser: ^1.1.1
   touchable: ^1.0.0
   get_it:
-  clock: ^1.1.0
   pdf: ^3.6.1
   path_provider: ^2.0.5
   open_file: ^3.2.1
-  flutter_file_dialog: ^2.3.0
-  multi_image_picker2: ^5.0.02
   image_picker: ^0.8.4+3
   screenshot: ^1.2.3
   flutter_phoenix: ^1.0.0
+  mockito: ^5.0.16
+  integration_test: ^0.8.1
 
 
 cupertino_icons: ^1.0.2

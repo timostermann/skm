@@ -8,7 +8,7 @@ class SkImageButton extends StatelessWidget {
   final ImageProvider<Object> _image;
   final TemplateType _type;
 
-  const SkImageButton({
+  SkImageButton({
     required String text,
     required ImageProvider<Object> image,
     required TemplateType type,
@@ -20,30 +20,13 @@ class SkImageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return SketchScreenWrapper(type: _type);
-          }),
-        );
+        routeToSketchScreen(context);
       },
       child: Container(
         margin: EdgeInsets.symmetric(
           vertical: 20,
         ),
-        decoration: BoxDecoration(
-          border: Border.all(color: SkColors.accent400, width: 1.5),
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          color: Colors.black,
-          gradient: LinearGradient(
-            colors: [
-              SkColors.main700,
-              SkColors.main800,
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.center,
-          ),
-        ),
+        decoration: imageButtonBoxDecoration,
         child: Column(
           children: [
             ClipRRect(
@@ -69,6 +52,29 @@ class SkImageButton extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  final BoxDecoration? imageButtonBoxDecoration = BoxDecoration(
+    border: Border.all(color: SkColors.accent400, width: 1.5),
+    borderRadius: BorderRadius.all(Radius.circular(15)),
+    color: Colors.black,
+    gradient: LinearGradient(
+      colors: [
+        SkColors.main700,
+        SkColors.main800,
+      ],
+      begin: Alignment.bottomCenter,
+      end: Alignment.center,
+    ),
+  );
+
+  void routeToSketchScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return SketchScreenWrapper(type: _type);
+      }),
     );
   }
 }
