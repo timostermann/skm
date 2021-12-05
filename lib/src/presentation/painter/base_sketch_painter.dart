@@ -6,19 +6,28 @@ import 'package:skm_services/src/presentation/blocs/mode/mode_bloc.dart';
 import 'package:skm_services/src/presentation/widgets/sketch_widgets/point.dart';
 import 'package:touchable/touchable.dart';
 
+enum TextPosition { top, right, bottom, left }
+
 abstract class BaseSketchPainter extends CustomPainter {
   final BuildContext context;
   final SketchTemplate template;
+  final TextPainter textPainter = TextPainter(
+      textAlign: TextAlign.center, textDirection: TextDirection.ltr);
 
   BaseSketchPainter(this.context, this.template);
 
   void paint(Canvas canvas, Size size);
 
-  void drawNode(
-      {required TouchyCanvas canvas,
-      required Point center,
-      Function(DragUpdateDetails)? onPanUpdate,
-      Function(TapDownDetails)? onTapDown}) {
+  void drawNode({
+    required TouchyCanvas canvas,
+    required Point center,
+    Function(DragUpdateDetails)? onPanUpdate,
+    Function(TapDownDetails)? onTapDown,
+    Canvas? textCanvas,
+    InteractionType? interactionType,
+    TextPosition? textPosition,
+    String? text,
+  }) {
     canvas.drawCircle(
       center.offset,
       18,
@@ -60,6 +69,18 @@ abstract class BaseSketchPainter extends CustomPainter {
         }
       },
     );
+
+    if (text != null && textCanvas != null) {
+      TextSpan textSpan =
+          TextSpan(style: TextStyle(color: Colors.black), children: [
+        TextSpan(text: text, style: TextStyle(fontSize: 20)),
+        getDirectionIcon(interactionType ?? InteractionType.none, text),
+      ]);
+      textPainter.text = textSpan;
+      textPainter.layout();
+      textPainter.paint(textCanvas,
+          getTextPosition(center.offset, textPosition ?? TextPosition.top));
+    }
   }
 
   void drawLine(TouchyCanvas canvas, Point start, Point end) {
@@ -71,6 +92,38 @@ abstract class BaseSketchPainter extends CustomPainter {
         ..strokeWidth = 5
         ..strokeCap = StrokeCap.round,
     );
+  }
+
+  Offset getTextPosition(Offset nodePosition, TextPosition textPosition) {
+    switch (textPosition) {
+      case TextPosition.top:
+        return Offset(nodePosition.dx - 25, nodePosition.dy - 50);
+      case TextPosition.right:
+        return Offset(nodePosition.dx + 25, nodePosition.dy - 15);
+      case TextPosition.bottom:
+        return Offset(nodePosition.dx - 25, nodePosition.dy + 25);
+      case TextPosition.left:
+        return Offset(nodePosition.dx - 90, nodePosition.dy - 15);
+    }
+  }
+
+  TextSpan getDirectionIcon(InteractionType interactionType, String text) {
+    if (double.parse(text) == 0.0) return TextSpan();
+    switch (interactionType) {
+      case (InteractionType.vertical):
+        IconData icon = (double.parse(text) > 0.0) ? Icons.north : Icons.south;
+        return TextSpan(
+            text: String.fromCharCode(icon.codePoint),
+            style: TextStyle(fontFamily: icon.fontFamily, fontSize: 20));
+      case (InteractionType.horizontal):
+      case (InteractionType.angle):
+        IconData icon = (double.parse(text) > 0.0) ? Icons.east : Icons.west;
+        return TextSpan(
+            text: String.fromCharCode(icon.codePoint),
+            style: TextStyle(fontFamily: icon.fontFamily, fontSize: 20));
+      default:
+        return TextSpan();
+    }
   }
 
   @override

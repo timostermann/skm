@@ -48,7 +48,7 @@ class AlcovePainter extends BaseSketchPainter {
       ),
       Point.interactable(
         offset: Offset(100 + template.interactiveCoordinates[2], 0),
-        interactionType: InteractionType.angle,
+        interactionType: InteractionType.horizontal,
       ),
       Point.interactable(
         offset: Offset(100 + template.interactiveCoordinates[1], 0),
@@ -91,6 +91,10 @@ class AlcovePainter extends BaseSketchPainter {
               ),
             );
       },
+      textCanvas: canvas,
+      interactionType: InteractionType.vertical,
+      textPosition: TextPosition.bottom,
+      text: template.interactiveCoordinates[0].toString(),
     );
 
     drawNode(
@@ -116,6 +120,10 @@ class AlcovePainter extends BaseSketchPainter {
               ),
             );
       },
+      textCanvas: canvas,
+      interactionType: InteractionType.horizontal,
+      textPosition: TextPosition.bottom,
+      text: template.interactiveCoordinates[5].toString(),
     );
 
     drawNode(
@@ -142,6 +150,10 @@ class AlcovePainter extends BaseSketchPainter {
               ),
             );
       },
+      textCanvas: canvas,
+      interactionType: InteractionType.vertical,
+      textPosition: TextPosition.right,
+      text: template.interactiveCoordinates[4].toString(),
     );
 
     drawNode(
@@ -169,6 +181,10 @@ class AlcovePainter extends BaseSketchPainter {
               ),
             );
       },
+      textCanvas: canvas,
+      interactionType: InteractionType.angle,
+      textPosition: TextPosition.top,
+      text: template.interactiveCoordinates[3].toString(),
     );
 
     drawNode(
@@ -190,10 +206,14 @@ class AlcovePainter extends BaseSketchPainter {
               SketchToggleTextPopup(
                 template: template,
                 coordinateIndex: 2,
-                interactionType: InteractionType.angle,
+                interactionType: InteractionType.horizontal,
               ),
             );
       },
+      textCanvas: canvas,
+      interactionType: InteractionType.horizontal,
+      textPosition: TextPosition.top,
+      text: template.interactiveCoordinates[2].toString(),
     );
 
     drawNode(
@@ -219,6 +239,10 @@ class AlcovePainter extends BaseSketchPainter {
               ),
             );
       },
+      textCanvas: canvas,
+      interactionType: InteractionType.angle,
+      textPosition: TextPosition.top,
+      text: template.interactiveCoordinates[1].toString(),
     );
   }
 }
