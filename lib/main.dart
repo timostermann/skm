@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:skm_services/features/customer/presentation/bloc/customer_bloc.dart';
-import 'package:skm_services/features/document/presentation/bloc/document_bloc.dart';
-import 'dependencies.dart';
-import 'features/home.dart';
+import 'package:skm_services/src/presentation/blocs/customer/customer_bloc.dart';
+import 'package:skm_services/src/presentation/blocs/document/document_bloc.dart';
+import 'src/injector.dart';
+import 'src/presentation/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
