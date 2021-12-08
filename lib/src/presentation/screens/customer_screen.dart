@@ -202,27 +202,27 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                                   .validate()) {
                                             _customerFormKey.currentState!
                                                 .save();
-                                            final costumerValues =
+                                            final customerValues =
                                                 _customerFormKey
                                                     .currentState!.value;
                                             context.read<CustomerBloc>().add(
                                                     CustomerUpdateFields(
                                                         Customer(
-                                                  id: costumerValues["id"],
-                                                  firstName: costumerValues[
+                                                  id: customerValues["id"],
+                                                  firstName: customerValues[
                                                       "firstName"],
-                                                  lastName: costumerValues[
+                                                  lastName: customerValues[
                                                       "lastName"],
                                                   street:
-                                                      costumerValues["street"],
-                                                  postcode: costumerValues[
+                                                      customerValues["street"],
+                                                  postcode: customerValues[
                                                       "postcode"],
                                                   place:
-                                                      costumerValues["place"],
+                                                      customerValues["place"],
                                                   phone:
-                                                      costumerValues["phone"],
+                                                      customerValues["phone"],
                                                   email:
-                                                      costumerValues["email"],
+                                                      customerValues["email"],
                                                 )));
                                             Navigator.push(
                                               context,

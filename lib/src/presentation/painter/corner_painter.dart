@@ -4,9 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skm_services/src/data/enums/interaction_type.dart';
 import 'package:skm_services/src/data/models/sketch_template.dart';
 import 'package:skm_services/src/presentation/blocs/sketch/sketch_bloc.dart';
-import 'package:skm_services/src/presentation/widgets/sketch_widgets/point.dart';
+import 'package:skm_services/src/presentation/widgets/sketch/point.dart';
 import 'package:touchable/touchable.dart';
-
 
 import 'base_sketch_painter.dart';
 

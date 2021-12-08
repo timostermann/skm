@@ -7,7 +7,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skm_services/src/config/styles.dart';
-import 'package:skm_services/src/domain/pdf.dart';
+import 'package:skm_services/src/core/pdf.dart';
 import 'package:skm_services/src/presentation/blocs/document/document_bloc.dart';
 import 'package:skm_services/src/presentation/widgets/sk_button.dart';
 import 'package:pdf/widgets.dart' as pdfWidgets;

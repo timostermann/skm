@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skm_services/src/config/styles.dart';
-import 'package:skm_services/src/presentation/widgets/sketch_widgets/line_input.dart';
+import 'package:skm_services/src/presentation/widgets/sketch/line_input.dart';
 
 class DragLine extends StatelessWidget {
   final double _length;
