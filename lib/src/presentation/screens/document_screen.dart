@@ -340,7 +340,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                                       getCustomerValue(state
                                                           .cache
                                                           .customer
-                                                          .firstName)),
+                                                          .lastName)),
                                                 ]),
                                                 pdfWidgets.Row(children: [
                                                   pdfWidgets.Text(
@@ -349,7 +349,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                                       getCustomerValue(state
                                                           .cache
                                                           .customer
-                                                          .firstName)),
+                                                          .street)),
                                                 ]),
                                                 pdfWidgets.Row(children: [
                                                   pdfWidgets.Text("PLZ: "),
@@ -357,7 +357,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                                       getCustomerValue(state
                                                           .cache
                                                           .customer
-                                                          .firstName)),
+                                                          .postcode)),
                                                 ]),
                                                 pdfWidgets.Row(children: [
                                                   pdfWidgets.Text("Ort: "),
@@ -365,7 +365,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                                       getCustomerValue(state
                                                           .cache
                                                           .customer
-                                                          .firstName)),
+                                                          .place)),
                                                 ]),
                                                 pdfWidgets.Row(children: [
                                                   pdfWidgets.Text(
@@ -374,7 +374,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                                       getCustomerValue(state
                                                           .cache
                                                           .customer
-                                                          .firstName)),
+                                                          .phone)),
                                                 ]),
                                                 pdfWidgets.Row(children: [
                                                   pdfWidgets.Text("E-Mail: "),
@@ -382,16 +382,14 @@ class _DocumentScreenState extends State<DocumentScreen> {
                                                       getCustomerValue(state
                                                           .cache
                                                           .customer
-                                                          .firstName)),
+                                                          .email)),
                                                 ]),
                                                 pdfWidgets.Row(children: [
                                                   pdfWidgets.Text(
                                                       "Kundenummer: "),
                                                   pdfWidgets.Text(
                                                       getCustomerValue(state
-                                                          .cache
-                                                          .customer
-                                                          .firstName)),
+                                                          .cache.customer.id)),
                                                 ]),
                                                 pdfWidgets.Padding(
                                                   padding: const pdfWidgets
